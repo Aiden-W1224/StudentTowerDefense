@@ -16,7 +16,7 @@ public class Tower_place
 		this.y_coord = 0;
 		//while ((x_coord != -1) && (y_coord != -1))
 		//{
-			System.out.println("Select co-ordinates for a tower; enter -1 and -1 to begin the game.");
+			System.out.println("Select co-ordinates for a tower.");
 			System.out.println("x co-ordinate: ");
 			this.x_coord = sc.nextInt();
 			System.out.println("y co-ordinate: ");

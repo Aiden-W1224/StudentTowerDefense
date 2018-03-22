@@ -50,6 +50,7 @@ public abstract class Enemy
 	{
 		this.true_x = STANDBY_X;
 		this.true_y = STANDBY_Y;
+		this.health = 0;
 	}
 	
 	public void move(int[][] map) 

@@ -6,5 +6,6 @@ public class Researcher extends Enemy
 		super();
 		set_appearance(4);
 		set_health(20);
+		get_doll().set_appearance(get_appearance());
 	}
 }
