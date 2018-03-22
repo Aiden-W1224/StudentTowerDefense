@@ -29,8 +29,11 @@ public class Test_map_03
 					else 
 					{
 						enemy.move(map);
-						enemy.get_doll().move(enemy, foo, pane);
-						foo.set_delay(1);
+						if (enemy.get_health() > 0) 
+						{
+							enemy.get_doll().move(enemy, foo, pane);
+							foo.set_delay(1);
+						}
 						map[enemy.get_y()][enemy.get_x()] = enemy.get_appearance();
 						map[enemy.get_previous_y()][enemy.get_previous_x()] = 1;
 					}
@@ -47,6 +50,8 @@ public class Test_map_03
 				wave.get(enemy_nom).set_on_map();
 				//pane.getChildren().add(wave.get(enemy_nom).get_doll());
 				wave.get(enemy_nom).get_doll().initial_placement(pane);
+				wave.get(enemy_nom).get_doll().move(wave.get(enemy_nom), foo, pane);
+				foo.set_delay(1);
 				System.out.println("X property: " + wave.get(enemy_nom).get_doll().xProperty());
 				System.out.println("Other X property: " + wave.get(enemy_nom).get_doll().getLayoutX());
 				System.out.println("Other other X property: " + wave.get(enemy_nom).get_doll().getX());
