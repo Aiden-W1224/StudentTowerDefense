@@ -8,6 +8,7 @@ public class Level_generator
 	private int researcher_populate;
 	private int level;
 	private final int LEVEL_TOTAL = 3;
+	private int delay;
 	
 	public ArrayList<Tower> get_arsenal()
 	{
@@ -17,6 +18,21 @@ public class Level_generator
 	public void add_to_arsenal(Tower tower) 
 	{
 		this.arsenal.add(tower);
+	}
+	
+	public void reset_delay() 
+	{
+		this.delay = 0;
+	}
+	
+	public int get_delay() 
+	{
+		return this.delay;
+	}
+	
+	public void set_delay(int increment) 
+	{
+		this.delay += increment;
 	}
 	
 	public ArrayList<Enemy> get_wave()
@@ -79,7 +95,7 @@ public class Level_generator
 	{
 		for (Enemy enemy : this.wave) 
 		{
-			if ((enemy.get_health() > 0) && (enemy.get_x() != -1)) 
+			if ((enemy.get_health() > 0) || (enemy.get_x() != -1)) 
 			{
 				return true;
 			}
