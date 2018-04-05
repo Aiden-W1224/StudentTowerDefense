@@ -60,16 +60,32 @@ public class StartGame extends Application {
 
 				@Override
 				public void handle(MouseEvent event) {
-					for (TileType T : render.getTiles()) {
-						double x =  event.getSceneX()/64;
-						double y =  event.getSceneY()/64;
-						if (((int)x == T.getXcoord() && (int)y == T.getYcoord()) && (T.getTileType() == "grass")) {
-							
-							render.set_map(tower_place.place_towers(render.get_map(), gen, T.getXcoord(), T.getYcoord(), 8));
+					
+					double xDouble =  event.getSceneX()/64;
+					double yDouble =  event.getSceneY()/64;
+					
+					int x = (int) xDouble;
+					int y = (int) yDouble;
+					
+					if (x <= 16) {
+						if (render.get_map()[(int)y][(int)x] == 0) {
+							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 8));
 							render.update_map(player);
-							T.setTileType("tower");
+						
 						}
 					}
+				
+//					for (TileType T : render.getTiles()) {
+//						
+//						//double x =  event.getSceneX()/64;
+//						//double y =  event.getSceneY()/64;
+//						if (((int)x == T.getXcoord() && (int)y == T.getYcoord()) && (T.getTileType() == "grass")) {
+//							
+//							render.set_map(tower_place.place_towers(render.get_map(), gen, T.getXcoord(), T.getYcoord(), 8));
+//							render.update_map(player);
+//							T.setTileType("tower");
+//						}
+//					}
 					
 				}
 
@@ -89,15 +105,27 @@ public class StartGame extends Application {
 
 				@Override
 				public void handle(MouseEvent event) {
-					for (TileType T : render.getTiles()) {
-						double x =  event.getSceneX()/64;
-						double y =  event.getSceneY()/64;
-						if (((int)x == T.getXcoord() && (int)y == T.getYcoord()) && (T.getTileType() == "grass")) {
-							System.out.println("grass???");
-							render.set_map(tower_place.place_towers(render.get_map(), gen, T.getXcoord(), T.getYcoord(), 7));
+					
+					double x =  event.getSceneX()/64;
+					double y =  event.getSceneY()/64;
+					if (x <= 16) {
+						if (render.get_map()[(int)y][(int)x] == 0) {
+							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 7));
 							render.update_map(player);
+							
 						}
 					}
+					
+					//This is the old code for checking tower placement i'll delete it when i'm sure i dont need it 
+//					for (TileType T : render.getTiles()) {
+//						double x =  event.getSceneX()/64;
+//						double y =  event.getSceneY()/64;
+//						if (((int)x == T.getXcoord() && (int)y == T.getYcoord()) && (T.getTileType() == "grass")) {
+//							System.out.println("grass???");
+//							render.set_map(tower_place.place_towers(render.get_map(), gen, T.getXcoord(), T.getYcoord(), 7));
+//							render.update_map(player);
+//						}
+//					}
 					
 				}
 
