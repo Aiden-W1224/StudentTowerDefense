@@ -8,10 +8,141 @@ public class Engine
 {	
 	public Engine() {}
 	
+	private int true_doll_x;
+	private int true_doll_y;
+	
 	public void runGame(Level_generator foo, int[][] map, Pane pane, Player player, Render render) 
 	{	
-		foo.reset_delay();
 		ArrayList<Enemy> wave = foo.get_wave();
+		int delay = 0;
+		true_doll_x = (64*9);
+		true_doll_y = (64*12);
+		for (Enemy enemy : foo.get_wave_02()) 
+		{
+			enemy.get_doll().initial_placement(pane);
+			Timeline timeline = new Timeline();
+			KeyFrame NORTH = new KeyFrame(Duration.millis(31.25), evt -> 
+			{
+				(enemy.get_doll()).setLayoutY((enemy.get_doll()).getLayoutY() - 2);
+			});
+			
+			KeyFrame SOUTH = new KeyFrame(Duration.millis(31.25), evt -> 
+			{
+				(enemy.get_doll()).setLayoutY((enemy.get_doll()).getLayoutY() + 2);
+			});
+			
+			KeyFrame EAST = new KeyFrame(Duration.millis(31.25), evt -> 
+			{
+				(enemy.get_doll()).setLayoutX((enemy.get_doll()).getLayoutX() + 2);
+			});
+			
+			KeyFrame WEST = new KeyFrame(Duration.millis(31.25), evt -> 
+			{
+				(enemy.get_doll()).setLayoutX((enemy.get_doll()).getLayoutX() - 2);
+			});
+			timeline.setCycleCount(Animation.INDEFINITE);
+			timeline.getKeyFrames().add(NORTH);
+			timeline.setDelay(Duration.millis(1000*delay));
+			delay++;
+			AnimationTimer timer = new AnimationTimer() 
+			{
+				@Override
+				public void handle(long now) 
+				{
+					int circ = (int) (enemy.get_doll().getLayoutY()/64);
+					int nirc = (int) (enemy.get_doll().getLayoutX()/64);
+					if (timeline.getKeyFrames().contains(NORTH)) 
+					{
+						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
+								((enemy.get_doll().getLayoutX() % 64) == 0) && map[circ - 1][nirc] == 0) 
+						{
+							timeline.stop();
+							timeline.getKeyFrames().clear();
+							if (map[circ][nirc - 1] == 1) 
+							{
+								timeline.getKeyFrames().add(WEST);
+							}
+							else if (map[circ][nirc + 1] == 1) 
+							{
+								timeline.getKeyFrames().add(EAST);
+							}
+							timeline.setDelay(Duration.millis(0));
+							timeline.play();
+						}
+					}
+					else if (timeline.getKeyFrames().contains(WEST)) 
+					{
+						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
+								((enemy.get_doll().getLayoutX() % 64) == 0) && map[circ][nirc - 1] == 0) 
+						{
+							timeline.stop();
+							timeline.getKeyFrames().clear();
+							if (map[circ - 1][nirc] == 1) 
+							{
+								timeline.getKeyFrames().add(NORTH);
+							}
+							else if (map[circ + 1][nirc] == 1) 
+							{
+								timeline.getKeyFrames().add(SOUTH);
+							}
+							timeline.setDelay(Duration.millis(0));
+							timeline.play();
+						}
+					}
+					else if (timeline.getKeyFrames().contains(EAST)) 
+					{
+						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
+								((enemy.get_doll().getLayoutX() % 64) == 0) 
+								&& (nirc + 1 > 16 || map[circ][nirc + 1] == 0)) 
+						{
+							timeline.stop();
+							if (nirc == 16) 
+							{
+								enemy.get_doll().remove_enemy_end(pane, player, render);
+							}
+							timeline.getKeyFrames().clear();
+							if (map[circ - 1][nirc] == 1) 
+							{
+								timeline.getKeyFrames().add(NORTH);
+							}
+							else if (map[circ + 1][nirc] == 1) 
+							{
+								timeline.getKeyFrames().add(SOUTH);
+							}
+							timeline.setDelay(Duration.millis(0));
+							timeline.play();
+						}
+					}
+					else if (timeline.getKeyFrames().contains(SOUTH)) 
+					{
+						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
+								((enemy.get_doll().getLayoutX() % 64) == 0) && map[circ + 1][nirc] == 0) 
+						{
+							timeline.stop();
+							timeline.getKeyFrames().clear();
+							if (map[circ][nirc - 1] == 1) 
+							{
+								timeline.getKeyFrames().add(WEST);
+							}
+							else if (map[circ][nirc + 1] == 1) 
+							{
+								timeline.getKeyFrames().add(EAST);
+							}
+							timeline.setDelay(Duration.millis(0));
+							timeline.play();
+						}
+					}
+					if (enemy.get_doll().getLayoutY() == enemy.get_doll().get_death_y() 
+							&& enemy.get_doll().getLayoutX() == enemy.get_doll().get_death_x()) 
+					{
+						timeline.stop();
+						enemy.get_doll().remove_enemy_death(pane);
+					}
+				}
+			};
+			timeline.play();
+			timer.start();
+		}
 		int enemyNum = 0;
 		while ((foo.check_wave() || enemyNum == 0) && player.getGPA() >= 0) 
 		{
@@ -34,11 +165,6 @@ public class Engine
 					else 
 					{
 						enemy.move(map);
-						if (enemy.get_health() > 0) 
-						{
-							enemy.get_doll().move(enemy, foo, pane, render, player);
-							foo.set_delay(1);
-						}
 						map[enemy.get_y()][enemy.get_x()] = enemy.get_appearance();
 						map[enemy.get_previous_y()][enemy.get_previous_x()] = 1;
 					}
@@ -53,9 +179,6 @@ public class Engine
 			if (enemyNum < wave.size()) 
 			{
 				wave.get(enemyNum).set_on_map();
-				wave.get(enemyNum).get_doll().initial_placement(pane);
-				wave.get(enemyNum).get_doll().move(wave.get(enemyNum), foo, pane, render, player);
-				foo.set_delay(1);
 				System.out.println("X property: " + wave.get(enemyNum).get_doll().xProperty());
 				System.out.println("Other X property: " + wave.get(enemyNum).get_doll().getLayoutX());
 				System.out.println("Other other X property: " + wave.get(enemyNum).get_doll().getX());
