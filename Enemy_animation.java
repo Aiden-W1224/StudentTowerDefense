@@ -45,15 +45,15 @@ public class Enemy_animation extends ImageView
 			setImage(new Image("art.jpg"));
 			break;
 		case 5:
-			setImage(new Image("raoh.png"));
+			setImage(new Image("Dohataru.png"));
 			break;
 		}
 	}
 	
 	public void initial_placement(Pane pane) 
 	{
-		setLayoutY(INIT_GAME_Y);
-		setLayoutX(INIT_GAME_X);
+		setTranslateY(INIT_GAME_Y);
+		setTranslateX(INIT_GAME_X);
 		pane.getChildren().add(this);
 	}
 	
@@ -61,13 +61,16 @@ public class Enemy_animation extends ImageView
 	public void remove_enemy_end(Pane pane, Player player, Render render) 
 	{
 		pane.getChildren().remove(this);
-		player.setGPA(player.getGPA() - 1);
+		player.setGPA(player.getGPA() - 0.1);
 		render.update_map(player);
 		System.out.println(player.getGPA());
 	}
 	
-	public void remove_enemy_death(Pane pane) {
+	
+	public void remove_enemy_death(Pane pane, Player player, Render render) {
 		pane.getChildren().remove(this);
+		player.setTuition(player.getTuition() + 100);
+		render.update_map(player);
 	}
 	
 	public void record_death(int array_x, int array_y) 
@@ -77,13 +80,40 @@ public class Enemy_animation extends ImageView
 		System.out.println("Death x is: " + array_x + ", " + last_x);
 	}
 	
-	public int get_death_x() 
+	public void move(Enemy enemy, Level_generator foo, Pane pane, Render render, Player player) 
 	{
-		return this.last_x;
+		this.goal_game_x = enemy.get_x()*64;
+		this.goal_game_y = enemy.get_y()*64;
+		System.out.println("Current x: " + true_game_x);
+		System.out.println("Current y: " + true_game_y);
+		System.out.println("Goal x: " + goal_game_x);
+		System.out.println("Goal y: " + goal_game_y);
+		
+		TranslateTransition t = new TranslateTransition(Duration.millis(1000), this);
+		t.setFromX(true_game_x);
+		t.setFromY(true_game_y);
+		t.setToY(goal_game_y);
+		t.setToX(goal_game_x);
+		t.setDelay(Duration.millis(450*(foo.get_delay())));
+		t.setOnFinished(new EventHandler<ActionEvent>() 
+		{
+			@Override
+			public void handle(ActionEvent event) 
+			{
+				if (t.getToX() == 64*16) 
+				{
+					enemy.get_doll().remove_enemy_end(pane, player, render);
+					foo.set_delay(-1);
+				}
+				else if (t.getToX() == last_x && t.getToY() == last_y) {
+					enemy.get_doll().remove_enemy_death(pane, player, render);
+					foo.set_delay(-1);
+				}
+			}
+		});
+		t.play();
+		
+		this.true_game_x = goal_game_x;
+		this.true_game_y = goal_game_y;
 	}
-	
-	public int get_death_y() 
-	{
-		return this.last_y;
- 	}
 }

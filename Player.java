@@ -7,7 +7,7 @@ public class Player {
 
 	public Player() {
 		this.GPA = 4.0;
-		this.tuition = 15000;
+		this.tuition = 5000;
 	}
 	/**
 	 * 
@@ -26,6 +26,9 @@ public class Player {
 	 */
 	public int getTuition() {
 		return tuition;
+	}
+	public void setTuition(int tuition) {
+		this.tuition = tuition;
 	}
 	
 	/**
