@@ -72,7 +72,7 @@ public class SceneSelect {
 		t.setStyle("-fx-font: 50 arial;");
 		vb.getChildren().add(t);
 		vb.getChildren().add(menuButton);
-		Scene scene = new Scene(border, 1088, 768);
+		Scene scene = new Scene(border, 1280, 960);
 		ImageView map1 = new ImageView(map);
 		map1.setOnMouseClicked(e ->
 		{

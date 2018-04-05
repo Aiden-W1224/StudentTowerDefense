@@ -12,7 +12,15 @@ public class Tower_place
 	
 	public int[][] place_towers(int[][] map, Level_generator gen, int x_coord, int y_coord, int tower_num)
 	{
-
+		//this.x_coord = 0;
+		//this.y_coord = 0;
+		
+//			System.out.println("Select co-ordinates for a tower.");
+//			System.out.println("x co-ordinate: ");
+//			this.x_coord = sc.nextInt();
+//			System.out.println("y co-ordinate: ");
+//			this.y_coord = sc.nextInt();
+//			System.out.println("Type in tower type (First-year = 7, Second-year = 8): ");
 			this.tower_type = tower_num;
 		
 			
@@ -28,6 +36,12 @@ public class Tower_place
 					firstYear = new Second_year(x_coord, y_coord, map);
 					break;
 				}
+				/**System.out.println("Tower bounds: ");
+				for (int i = 0; i < floof.get_bounds().size(); i++) 
+				{
+					System.out.print(Arrays.toString(floof.get_bounds().get(i)));
+				}
+				System.out.println("\n");*/
 				gen.add_to_arsenal(firstYear);
 				map[firstYear.get_y()][firstYear.get_x()] = firstYear.get_appearance();
 				System.out.println("Map now: ");
@@ -37,7 +51,7 @@ public class Tower_place
 				}
 				System.out.println();
 			}
-		
+		//}
 		return map;
 	}
 	

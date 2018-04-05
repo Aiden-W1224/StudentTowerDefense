@@ -16,10 +16,6 @@ public class Player {
 	public double getGPA() {
 		return GPA;
 	}
-	
-	public void setGPA(double GPA) {
-		this.GPA = GPA;
-	}
 	/**
 	 * 
 	 * @return returns the tuition

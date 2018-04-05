@@ -30,6 +30,31 @@ public class Enemy_animation extends ImageView
 	private int last_x;
 	private int last_y;
 	
+	boolean cool = true;
+	
+	private final KeyFrame NORTH = new KeyFrame(Duration.millis(40), evt -> 
+	{
+		setLayoutY(getLayoutY() - 0.06);
+	});
+	private final KeyFrame SOUTH = new KeyFrame(Duration.millis(40), evt -> 
+	{
+		setLayoutY(getLayoutY() + 0.07);
+	});
+	private final KeyFrame EAST = new KeyFrame(Duration.millis(40), evt -> 
+	{
+		setLayoutX(getLayoutX() + 0.07);
+	});
+	private final KeyFrame WEST = new KeyFrame(Duration.millis(40), evt -> 
+	{
+		setLayoutX(getLayoutX() - 0.07);
+	});
+	private int dir = -1;
+	
+	public void set_dir(int dir) 
+	{
+		this.dir = dir;
+	}
+	
 	public Enemy_animation() 
 	{
 		//setImage(new Image("res/raoh.png"));
@@ -37,12 +62,18 @@ public class Enemy_animation extends ImageView
 		this.true_game_y = INIT_GAME_Y;
 	}
 	
+	public void set_location(int goal_game_x, int goal_game_y) 
+	{
+		this.true_game_x = goal_game_x;
+		this.true_game_y = goal_game_y;
+	}
+	
 	public void set_appearance(int array_appearance) 
 	{
 		switch (array_appearance) 
 		{
 		case 4:
-			setImage(new Image("art.jpg"));
+			setImage(new Image("woody.jpg"));
 			break;
 		case 5:
 			setImage(new Image("raoh.png"));
@@ -52,21 +83,31 @@ public class Enemy_animation extends ImageView
 	
 	public void initial_placement(Pane pane) 
 	{
-		setTranslateY(INIT_GAME_Y);
-		setTranslateX(INIT_GAME_X);
+		setLayoutY(INIT_GAME_Y);
+		setLayoutX(INIT_GAME_X);
 		pane.getChildren().add(this);
 	}
 	
-	
-	public void remove_enemy_end(Pane pane, Player player, Render render) 
+	/**public void set_doll_health(int health) 
 	{
-		pane.getChildren().remove(this);
-		player.setGPA(player.getGPA() - 1);
-		render.update_map(player);
-		System.out.println(player.getGPA());
-	}
+		this.doll_health = health;
+		System.out.println("Doll has: " + this.doll_health + " health");
+	}*/
 	
-	public void remove_enemy_death(Pane pane) {
+	/**public int get_doll_health() 
+	{
+		return this.doll_health;
+	}*/
+	
+	/**public void new_placement(Pane pane) 
+	{
+		setX(getX() - (goal_game_x - true_game_x));
+		setY(getY() - (goal_game_y - true_game_y));
+		pane.getChildren().add(this);
+	}*/
+	
+	public void remove_doll(Pane pane) 
+	{
 		pane.getChildren().remove(this);
 	}
 	
@@ -77,40 +118,13 @@ public class Enemy_animation extends ImageView
 		System.out.println("Death x is: " + array_x + ", " + last_x);
 	}
 	
-	public void move(Enemy enemy, Level_generator foo, Pane pane, Render render, Player player) 
+	public int get_death_x() 
 	{
-		this.goal_game_x = enemy.get_x()*64;
-		this.goal_game_y = enemy.get_y()*64;
-		System.out.println("Current x: " + true_game_x);
-		System.out.println("Current y: " + true_game_y);
-		System.out.println("Goal x: " + goal_game_x);
-		System.out.println("Goal y: " + goal_game_y);
-		
-		TranslateTransition t = new TranslateTransition(Duration.millis(1000), this);
-		t.setFromX(true_game_x);
-		t.setFromY(true_game_y);
-		t.setToY(goal_game_y);
-		t.setToX(goal_game_x);
-		t.setDelay(Duration.millis(450*(foo.get_delay())));
-		t.setOnFinished(new EventHandler<ActionEvent>() 
-		{
-			@Override
-			public void handle(ActionEvent event) 
-			{
-				if (t.getToX() == 64*16) 
-				{
-					enemy.get_doll().remove_enemy_end(pane, player, render);
-					foo.set_delay(-1);
-				}
-				else if (t.getToX() == last_x && t.getToY() == last_y) {
-					enemy.get_doll().remove_enemy_death(pane);
-					foo.set_delay(-1);
-				}
-			}
-		});
-		t.play();
-		
-		this.true_game_x = goal_game_x;
-		this.true_game_y = goal_game_y;
+		return this.last_x;
+	}
+	
+	public int get_death_y() 
+	{
+		return this.last_y;
 	}
 }

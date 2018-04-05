@@ -22,10 +22,10 @@ import javafx.stage.Stage;
 
 public class GUI_driver extends Application
 {
-	private Render noot = new Render();
+	private CanvasTest_02 noot = new CanvasTest_02();
 	private Tower_place tower_place = new Tower_place();
 	private Level_generator gen = new Level_generator();
-	private Engine wave_generator = new Engine();
+	private Test_map_03 wave_generator = new Test_map_03();
 	Enemy_animation foobar = new Enemy_animation();
 	
 	private SceneSelect SCENE = new SceneSelect();
@@ -93,15 +93,6 @@ public class GUI_driver extends Application
 		        gc.setFont(titleFont);
 		        gc.fillText("University\n  GPA\n Defence", 500, 200);
 		        gc.strokeText("University\n  GPA\n Defence", 500, 200);
-		        //Image obtained from http://www.freestockphotos.biz/stockphoto/3469
-		        //Image student = new Image("Student2.png");
-		        //gc.drawImage(student, 100,400 );
-		        
-		        //Image obtained from https://www.kisspng.com/png-mathematician-mathematics-stock-photography-clip-a-70743/
-		        //Image teacher = new Image("Teacher.png");
-		        //gc.drawImage(teacher, 800, 350);
-		        
-		        //Create menu button for info screen 
 
 		        
 		        //Create info button for main menu screen
