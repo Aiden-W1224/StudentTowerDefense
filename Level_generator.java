@@ -41,6 +41,11 @@ public class Level_generator
 		return this.wave;
 	}
 	
+	public ArrayList<Enemy> get_wave_02()
+	{
+		return this.wave;
+	}
+	
 	public void set_populate() 
 	{
 		switch (level) 
