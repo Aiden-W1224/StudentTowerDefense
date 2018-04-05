@@ -163,6 +163,7 @@ public class Engine
 						//player.setGPA(player.getGPA() - 1);
 						//render.update_map(player);
 						//System.out.println(player.getGPA());
+						System.out.println("GPA: " + player.getGPA());
 						
 						
 					}
@@ -177,6 +178,7 @@ public class Engine
 						map[enemy.get_y()][enemy.get_x()] = 1;
 						enemy.get_doll().record_death(enemy.get_previous_x(), enemy.get_previous_y());
 						enemy.eliminate();
+						System.out.println("Tuition: " + player.getTuition());
 					}
 				}
 			}
