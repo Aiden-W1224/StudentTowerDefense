@@ -48,8 +48,8 @@ public class SceneSelect {
 	    System.out.print(javafx.scene.text.Font.getFamilies());
 		
 	    //moving text into center position
-	    text.setTranslateX(-50);
-		text.setTranslateY(-175);
+	    text.setTranslateX(-150);
+		text.setTranslateY(-100);
 		welcomeText.setTranslateX(-10);
 		welcomeText.setTranslateY(-400);
 		//infoScene.setFill(Color.ALICEBLUE);
@@ -72,7 +72,7 @@ public class SceneSelect {
 		t.setStyle("-fx-font: 50 arial;");
 		vb.getChildren().add(t);
 		vb.getChildren().add(menuButton);
-		Scene scene = new Scene(border, 1280, 960);
+		Scene scene = new Scene(border, 1088, 768);
 		ImageView map1 = new ImageView(map);
 		map1.setOnMouseClicked(e ->
 		{

@@ -42,10 +42,10 @@ public class Enemy_animation extends ImageView
 		switch (array_appearance) 
 		{
 		case 4:
-			setImage(new Image("res/woody.jpg"));
+			setImage(new Image("art.jpg"));
 			break;
 		case 5:
-			setImage(new Image("res/raoh.png"));
+			setImage(new Image("raoh.png"));
 			break;
 		}
 	}
@@ -57,26 +57,16 @@ public class Enemy_animation extends ImageView
 		pane.getChildren().add(this);
 	}
 	
-	/**public void set_doll_health(int health) 
-	{
-		this.doll_health = health;
-		System.out.println("Doll has: " + this.doll_health + " health");
-	}*/
 	
-	/**public int get_doll_health() 
+	public void remove_enemy_end(Pane pane, Player player, Render render) 
 	{
-		return this.doll_health;
-	}*/
+		pane.getChildren().remove(this);
+		player.setGPA(player.getGPA() - 1);
+		render.update_map(player);
+		System.out.println(player.getGPA());
+	}
 	
-	/**public void new_placement(Pane pane) 
-	{
-		setX(getX() - (goal_game_x - true_game_x));
-		setY(getY() - (goal_game_y - true_game_y));
-		pane.getChildren().add(this);
-	}*/
-	
-	public void remove_doll(Pane pane) 
-	{
+	public void remove_enemy_death(Pane pane) {
 		pane.getChildren().remove(this);
 	}
 	
@@ -87,7 +77,7 @@ public class Enemy_animation extends ImageView
 		System.out.println("Death x is: " + array_x + ", " + last_x);
 	}
 	
-	public void move(Enemy enemy, Level_generator foo, Pane pane) 
+	public void move(Enemy enemy, Level_generator foo, Pane pane, Render render, Player player) 
 	{
 		this.goal_game_x = enemy.get_x()*64;
 		this.goal_game_y = enemy.get_y()*64;
@@ -101,15 +91,19 @@ public class Enemy_animation extends ImageView
 		t.setFromY(true_game_y);
 		t.setToY(goal_game_y);
 		t.setToX(goal_game_x);
-		t.setDelay(Duration.millis(1000*(foo.get_delay())));
+		t.setDelay(Duration.millis(450*(foo.get_delay())));
 		t.setOnFinished(new EventHandler<ActionEvent>() 
 		{
 			@Override
 			public void handle(ActionEvent event) 
 			{
-				if (t.getToX() == 64*16 || (t.getToX() == last_x && t.getToY() == last_y)) 
+				if (t.getToX() == 64*16) 
 				{
-					enemy.get_doll().remove_doll(pane);
+					enemy.get_doll().remove_enemy_end(pane, player, render);
+					foo.set_delay(-1);
+				}
+				else if (t.getToX() == last_x && t.getToY() == last_y) {
+					enemy.get_doll().remove_enemy_death(pane);
 					foo.set_delay(-1);
 				}
 			}
