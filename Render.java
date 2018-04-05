@@ -19,17 +19,17 @@ public class Render
 {
 	private int[][] map = {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 11, 0, 0},
+			{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
 			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-			{0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0},
-			{0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 6, 0, 0},
+			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 22, 0, 0},
 			};
 	private Level_generator foo = new Level_generator();
 	private Canvas canvas = new Canvas(1088, 768);
@@ -40,7 +40,8 @@ public class Render
 	private final int RESEARCHER = 4;
 	private final int FIRST_YEAR = 7;
 	private final int SECOND_YEAR = 8;
-	private final int SCORE_AREA = 11;
+	private final int SCORE_AREA = 6;
+	private final int TUITION_AREA = 22;
 	private final Image GRASS_IMAGE = new Image("grass.png");
 	private final Image PATH_IMAGE = new Image("dirt.png");
 	private final Image TA_IMAGE = new Image("raoh.png");
@@ -111,6 +112,17 @@ public class Render
 					String text = "GPA: " + player.getGPA();
 					this.gc.fillText(text, j*64, i*64);
 					this.gc.strokeText(text, j*64, i*64);
+					break;
+				case TUITION_AREA:
+					this.gc.drawImage(GRASS_IMAGE, j*64, i*64);
+					tiles.add(new TileType("grass", j, i));
+					Font title = Font.font("arial", FontWeight.EXTRA_BOLD, 25);
+			        this.gc.setFont(title);
+					String Tuition = "Tuition: " + player.getTuition();
+					this.gc.fillText(Tuition, j*64, i*64);
+					this.gc.strokeText(Tuition, j*64, i*64);
+					break;
+					
 				}
 			}
 		}

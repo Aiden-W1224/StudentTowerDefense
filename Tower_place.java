@@ -10,7 +10,7 @@ public class Tower_place
 	
 	public Tower_place() {}
 	
-	public int[][] place_towers(int[][] map, Level_generator gen, int x_coord, int y_coord, int tower_num)
+	public int[][] place_towers(int[][] map, Level_generator gen, int x_coord, int y_coord, int tower_num, Render render, Player player)
 	{
 
 			this.tower_type = tower_num;
@@ -23,9 +23,13 @@ public class Tower_place
 				{
 				case 7:
 					firstYear = new First_year(x_coord, y_coord, map);
+					player.setTuition(player.getTuition() - 250);
+					render.update_map(player);
 					break;
 				case 8:
 					firstYear = new Second_year(x_coord, y_coord, map);
+					player.setTuition(player.getTuition() - 500);
+					render.update_map(player);
 					break;
 				}
 				gen.add_to_arsenal(firstYear);
