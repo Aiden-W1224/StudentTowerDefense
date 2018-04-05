@@ -76,4 +76,14 @@ public class Enemy_animation extends ImageView
 		this.last_y = 64*array_y;
 		System.out.println("Death x is: " + array_x + ", " + last_x);
 	}
+	
+	public int get_death_x() 
+	{
+		return this.last_x;
+	}
+	
+	public int get_death_y() 
+	{
+		return this.last_y;
+ 	}
 }
