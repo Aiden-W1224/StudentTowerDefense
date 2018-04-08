@@ -7,7 +7,8 @@ public abstract class Enemy
 	private final int START_Y = 11;
 	private final int STANDBY_X = -1;
 	private final int STANDBY_Y = -1;
-	private final int TILE_SIZE = 64;
+	private final int TILE_SIZE = 64; 
+	private boolean tileType;
 	private int health;
 	private Enemy_animation doll;
 	
@@ -24,6 +25,7 @@ public abstract class Enemy
 	public int get_previous_y() { return this.previous_y; }
 	public void set_health(int health) { this.health = health; }
 	public int get_health() { return this.health; }
+	public boolean getTileType() {return this.tileType;}
 	public Enemy_animation get_doll() { return this.doll; }
 	
 	public Enemy() 
@@ -53,28 +55,50 @@ public abstract class Enemy
 		this.health = 0;
 	}
 	
-	public void move(int[][] map) 
-	{
-		if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y)) 
+public void move(int[][] map) {
+		
+		if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) || (map[true_y - 1][true_x] == 3) && (true_y - 1 != previous_y)) 
 		{
+			if (map[true_y - 1][true_x] == 3) {
+				tileType = true;
+			}else {
+				tileType = false;
+			}
 			this.previous_x = true_x;
 			this.previous_y = true_y;
 			this.true_y -=1;
 		}
-		else if ((map[true_y + 1][true_x] == 1) && (true_y + 1 != previous_y)) 
+		else if ((map[true_y + 1][true_x] == 1) && (true_y + 1 != previous_y)|| (map[true_y + 1][true_x] == 3) && (true_y+ 1 != previous_y)) 
 		{
+			if (map[true_y + 1][true_x] == 3) {
+				tileType = true;			
+				}else {
+					tileType = false;
+				}
+			
 			this.previous_x = true_x;
 			this.previous_y = true_y;
 			this.true_y += 1;
-		}
-		else if ((map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) 
+		} 
+		
+		else if ((map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)|| (map[true_y][true_x -1] == 3) && (true_x - 1 != previous_x)) 
 		{
+			if (map[true_y][true_x-1] == 3) {
+				tileType = true;
+			}else {
+				tileType = false;
+			}
 			this.previous_y = true_y;
 			this.previous_x = true_x;
 			this.true_x -= 1;
 		}
-		else if ((map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) 
+		else if ((map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)||(map[true_y][true_x + 1] == 3) && (true_x + 1 != previous_x)) 
 		{
+			if (map[true_y][true_x+1] == 3) {
+				tileType = true;
+			}else {
+				tileType = false;
+			}
 			this.previous_y = true_y;
 			this.previous_x = true_x;
 			this.true_x += 1;
@@ -92,3 +116,4 @@ public abstract class Enemy
 		return ("(" + true_x + ", " + true_y + ", " + health + ")");
 	}
 }
+
