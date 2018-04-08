@@ -25,7 +25,7 @@ public class Render
 			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0},
 			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 1, 1, 3, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 6, 0, 0},
@@ -37,6 +37,7 @@ public class Render
 	private final int GRASS = 0;
 	private final int PATH = 1;
 	private final int TA = 5;
+	private final int altPath = 3;
 	private final int RESEARCHER = 4;
 	private final int FIRST_YEAR = 7;
 	private final int SECOND_YEAR = 8;
@@ -82,6 +83,11 @@ public class Render
 					break;
 					
 				case PATH:
+					this.gc.drawImage(PATH_IMAGE, j*64, i*64);
+					tiles.add(new TileType("path", j, i));
+					break;
+					
+				case altPath:
 					this.gc.drawImage(PATH_IMAGE, j*64, i*64);
 					tiles.add(new TileType("path", j, i));
 					break;
