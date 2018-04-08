@@ -167,11 +167,16 @@ public class Engine
 						
 						
 					}
-					else 
-					{
+					
+					else if (enemy.getTileType() == false){
 						enemy.move(map);
 						map[enemy.get_y()][enemy.get_x()] = enemy.get_appearance();
 						map[enemy.get_previous_y()][enemy.get_previous_x()] = 1;
+					}
+					else if(enemy.getTileType()== true) {
+						enemy.move(map);
+						map[enemy.get_y()][enemy.get_x()] = enemy.get_appearance();
+						map[enemy.get_previous_y()][enemy.get_previous_x()] = 3;
 					}
 					if (enemy.get_health() <= 0 && enemy.get_x() != -1)
 					{
@@ -239,4 +244,3 @@ public class Engine
 		System.out.println();
 	}
 }
-
