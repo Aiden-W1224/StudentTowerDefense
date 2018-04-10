@@ -1,15 +1,58 @@
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
 
 public abstract class Tower 
 {
+	Timer timer = new Timer();
 	private int x_coord;
 	private int y_coord;
 	private int radius;
 	private int appearance;
-	private int shooting_rate;
+	private float timeSinceLastShot;
 	private int shots_fired;
 	private int damage;
 	private ArrayList<int[]> bounds = new ArrayList<int[]>();
+	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+	public Pane pane;
+	public Enemy enemy;
+	float shooting_rate = (float) 30.0;
+	TimerTask shooting = new TimerTask() {
+
+		@Override
+		public void run() {
+			shoot();
+			
+		}
+		
+	};
+	
+	public ArrayList<Projectile> getProjectiles(){return this.projectiles;}
+	public void shoot() {
+		//timeSinceLastShot = 0;
+		//Projectile p = new 
+		Projectile p = new Projectile(this.getScreenX(), this.getScreenY());
+		//p.getTranslateX()
+		//pane.getChildren().add(p);
+		//gen.get_wave_02().get(0)
+		p.draw(this.pane, this.enemy);
+		//projectiles.add(p);
+		//pane.getChildren().add(new Projectile(x_coord + 32.0, y_coord + 32.0, 5.0, 10));
+	}
+	
+	
+	public void update(Pane pane, Enemy enemy) {
+		//System.out.println("Shot fired: " + this.get_shots_fired());
+		this.pane = pane;
+		this.enemy = enemy;
+		shoot();
+		//timer.scheduleAtFixedRate(shooting, (long)100, (long)300);
+		
+	}
 	
 	public int get_x() 
 	{
@@ -19,6 +62,15 @@ public abstract class Tower
 	public int get_y() 
 	{
 		return this.y_coord;
+	}
+	
+	public double getScreenX() {
+		return this.x_coord*64.0;
+		
+	}
+	
+	public double getScreenY() {
+		return this.get_y()*64.0;
 	}
 	
 	public void set_damage(int damage) 
@@ -36,7 +88,7 @@ public abstract class Tower
 		this.shooting_rate = rate;
 	}
 	
-	public int get_shooting_rate() 
+	public float get_shooting_rate() 
 	{
 		return this.shooting_rate;
 	}
@@ -56,6 +108,10 @@ public abstract class Tower
 		return this.shots_fired;
 	}
 	
+	 /**
+	  * sets block radius around tower 
+	  * @param rad takes int value for radius 
+	  */
 	public void set_radius(int rad) 
 	{
 		this.radius = rad;
@@ -93,6 +149,11 @@ public abstract class Tower
 		return this.appearance;
 	}
 	
+	/**
+	 * Checks if enemy in array is within tower range 
+	 * @param map takes array map as parameter
+	 * @return boolean. returns true if enemy is within tower range  
+	 */
 	public boolean detect(int[][] map) 
 	{
 		for (int[] coord_set : this.bounds) 
@@ -105,8 +166,13 @@ public abstract class Tower
 		return false;
 	}
 	
+	/**
+	 * sets tower detection radius area within the array map 
+	 * @param map takes current int array as parameter 
+	 */
 	public void set_bounds(int[][] map) 
 	{
+		//sets area from radius to the left and to radius to the right and above and below by radius amount 
 		for (int i = -this.radius; i < this.radius + 1; i++) 
 		{
 			for (int j = -this.radius; j < this.radius + 1; j++) 
@@ -123,9 +189,44 @@ public abstract class Tower
 		}
 	}
 	
+	public double getGUIBoundsRight(int radius) {
+		double xBoundsRight = this.get_x()*64.0 + radius*64;;
+		return xBoundsRight;
+	}
+	
+	public double getGUIBoundsLeft(int radius) {
+		double xBoundsLeft = this.get_x()*64.0 - radius*64;
+		return xBoundsLeft;
+	}
+	
+	public double getGUIBoundsBelow(int radius) {
+		double yBoundsBelow = this.get_y()*64.0 + radius*64;
+		return yBoundsBelow;
+	}
+	
+	public double getGUIBoundsAbove(int radius) {
+		double yBoundsAbove = this.get_y()*64.0 - radius*64;
+		return yBoundsAbove;
+	}
+	
+	public boolean GUIDetect(Enemy enemy) {
+		if(enemy.get_doll().getLayoutX() <= this.getGUIBoundsRight(2) && enemy.get_doll().getLayoutX() > this.getGUIBoundsLeft(2) && 
+				enemy.get_doll().getLayoutY() > this.getGUIBoundsAbove(2) && enemy.get_doll().getLayoutY() < this.getGUIBoundsBelow(2)) {
+		
+			System.out.println("SHOOTING");
+			return true;
+			//T.shoot(pane);
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public String toString() 
 	{
 		return ("(" + x_coord + ", " + y_coord + ")");
 	}
+	
+	
 
 }

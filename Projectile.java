@@ -1,20 +1,43 @@
 import javafx.animation.PathTransition;
+import javafx.animation.TranslateTransition;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.HLineTo;
+import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.VLineTo;
 import javafx.util.Duration;
+//import static helpers.Clock.*;
 
 public class Projectile extends ImageView {
 	
-	private int speed;
+	private double speed;
 	private int damage;
-	private int x;
-	private int y;
-	private ImageView projectile = new ImageView(new Image("pencil.png"));
+	private double x, y;
+	//private int y;
+	private ImageView test = new ImageView(new Image("kenshiro.jpeg"));
+	private Circle projectile = new Circle(3, Color.BLACK);
 	
+	public Projectile(double x, double y, double speed, int damage, Pane pane) {
+		this.x = x;
+		this.y = y;
+		this.speed = speed;
+		this.damage = damage;
+		//draw(pane);
+	}
+	
+	public Projectile(double x, double y) {
+		this.x = x;
+		this.y = y;
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getDamage() {
 		return damage;
 	}
@@ -22,50 +45,47 @@ public class Projectile extends ImageView {
 		this.damage = damage;
 	}
 	
-	public int getSpeed() {
+	public double getSpeed() {
 		return speed;
 	}
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 	
-	public void move(Tower T, Render MAP) {
+	public void update(Pane pane) {
+		x += 0.1*speed;
+		//draw(pane);
+	}
+	
+	public void draw(Pane pane, Enemy target) {
 		
-		//if (T.detect(MAP.get_map()) == true) {
-			Path path = new Path();
-			path.getElements().add(new MoveTo(T.get_x()*64, T.get_y()*64));
-			path.getElements().add(new VLineTo(0));
-			PathTransition p1 = new PathTransition();
-			p1.setNode(projectile);
-			p1.setPath(path);
-			p1.setDuration(Duration.seconds(10));
-			p1.setAutoReverse(false);
-			p1.setCycleCount(1);
-			p1.play();
-		//}
-//		Path path = new Path();
-//		path.getElements().add(new MoveTo(64*9.5,64*12));
-//		path.getElements().add(new VLineTo(354));
-//		path.getElements().add(new HLineTo(416));
-//		path.getElements().add(new VLineTo(482));
-//		path.getElements().add(new HLineTo(160));
-//		path.getElements().add(new VLineTo(98));
-//		path.getElements().add(new HLineTo(736));
-//		path.getElements().add(new VLineTo(290));
-//		path.getElements().add(new HLineTo(864));
-//		path.getElements().add(new VLineTo(418));
-//		path.getElements().add(new HLineTo(1056+64));
+		TranslateTransition T = new TranslateTransition();
+		Circle circ = new Circle(5, Color.BLACK);
+		Path path = new Path();
+		path.getElements().add(new MoveTo(x+32.0, y+32.0));
+		path.getElements().add(new LineTo(target.get_doll().getLayoutX()+32.0, target.get_doll().getLayoutY()+32.0));
+		PathTransition p1 = new PathTransition();
+		p1.setNode(circ);
+		p1.setPath(path);
+		p1.setDuration(Duration.seconds(0.1));
+		p1.setAutoReverse(false);
+		p1.setCycleCount(1);
+		p1.play();
+		p1.setOnFinished(e-> {
+			pane.getChildren().remove(circ);
+		});
 		
-//		PathTransition p1 = new PathTransition();
-//		p1.setNode(projectile);
-//		p1.setPath(path);
-//		p1.setDuration(Duration.seconds(5));
-//		p1.setAutoReverse(false);
-//		p1.setCycleCount(1);
-//		p1.play();
+		pane.getChildren().add(circ);
+		//System.out.println("Projectile x, y: " +	circ.getLayoutX() + circ.getLayoutY());
+		
+		if (projectile.getLayoutX() == target.get_doll().getLayoutX()+32.0 && projectile.getLayoutY() == target.get_doll().getLayoutY()+32.0) {
+			pane.getChildren().remove(this.getProjectile());
+		}
 		
 	}
-	public ImageView getI() {
+	public Circle getProjectile() {
+		this.projectile.setTranslateX(x+32.0);
+		this.projectile.setTranslateY(y+32.0);
 		return this.projectile;
 	}
 	public void setX(int x) {
