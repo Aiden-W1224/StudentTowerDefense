@@ -45,7 +45,7 @@ public class Enemy_animation extends ImageView
 			setImage(new Image("art.png"));
 			break;
 		case 5:
-			setImage(new Image("raoh.png"));
+			setImage(new Image("Dohataru.png"));
 			break;
 		}
 	}
@@ -56,20 +56,39 @@ public class Enemy_animation extends ImageView
 		setLayoutX(INIT_GAME_X);
 		pane.getChildren().add(this);
 	}
-	
+	/**
+	 * Method for when the enemy makes it to the end of the map
+	 * @param pane
+	 * @param player
+	 * @param render
+	 */
 	
 	public void remove_enemy_end(Pane pane, Player player, Render render) 
 	{
 		pane.getChildren().remove(this);
 		player.setGPA(player.getGPA() - 1);
 		render.update_map(player);
-		System.out.println(player.getGPA());
+		System.out.println("GPA: " + player.getGPA());
 	}
-	
-	public void remove_enemy_death(Pane pane) {
+	/**
+	 * Method for when the enemy is killed by a tower
+	 * @param pane
+	 * @param player
+	 * @param render
+	 */
+	public void remove_enemy_death(Pane pane, Player player, Render render) {
 		pane.getChildren().remove(this);
+		player.setTuition(player.getTuition() + 100);
+		render.update_map(player);
+		
+		
+		
 	}
-	
+	/**
+	 * Records and prints death location
+	 * @param array_x
+	 * @param array_y
+	 */
 	public void record_death(int array_x, int array_y) 
 	{
 		this.last_x = 64*array_x;

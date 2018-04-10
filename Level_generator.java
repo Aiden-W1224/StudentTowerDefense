@@ -45,7 +45,9 @@ public class Level_generator
 	{
 		return this.wave;
 	}
-	
+	/**
+	 * How many enemies spawn per level
+	 */
 	public void set_populate() 
 	{
 		switch (level) 

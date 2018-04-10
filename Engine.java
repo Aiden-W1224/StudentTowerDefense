@@ -1,5 +1,3 @@
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,7 +16,7 @@ public class Engine
 	private int true_doll_x;
 	private int true_doll_y;
 	
-	public void runGame(Level_generator generator, int[][] map, Pane pane, Player player, Render render, GraphicsContext gc) 
+	public void runGame(Level_generator generator, int[][] map, Pane pane, Player player, Render render) 
 	{	
 		ArrayList<Enemy> wave = generator.get_wave();
 		int delay = 0;
@@ -177,7 +175,7 @@ public class Engine
 						//foo.get_wave_02().remove(enemy);
 						enemy.get_doll().setLayoutY(-1);
 						enemy.get_doll().setLayoutX(-1);
-						enemy.get_doll().remove_enemy_death(pane);
+						enemy.get_doll().remove_enemy_death(pane, player, render);
 						generator.get_wave_02().remove(enemy);
 						//enemy.get_doll().setLayoutY(-1);
 						//enemy.get_doll().setLayoutX(-1);
@@ -277,11 +275,4 @@ public class Engine
 		System.out.println();
 	}
 }
-
-
-
-
-
-
-
 

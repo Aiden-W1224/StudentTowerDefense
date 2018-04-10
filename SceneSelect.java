@@ -48,8 +48,8 @@ public class SceneSelect {
 	    System.out.print(javafx.scene.text.Font.getFamilies());
 		
 	    //moving text into center position
-	    text.setTranslateX(-50);
-		text.setTranslateY(-175);
+	    text.setTranslateX(-150);
+		text.setTranslateY(-100);
 		welcomeText.setTranslateX(-10);
 		welcomeText.setTranslateY(-400);
 		//infoScene.setFill(Color.ALICEBLUE);

@@ -29,7 +29,7 @@ public class GUI_driver extends Application
 	Enemy_animation foobar = new Enemy_animation();
 	
 	private SceneSelect SCENE = new SceneSelect();
-	private Image image = new Image("TestMap.png");
+	private Image image = new Image("Testmap.png");
 	public static Circle ball;
 
 	public static Button newButton(String text, int posx, int posy) {

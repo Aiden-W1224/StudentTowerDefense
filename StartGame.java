@@ -1,3 +1,5 @@
+import java.net.URISyntaxException;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -10,6 +12,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class StartGame extends Application {
@@ -24,6 +28,7 @@ public class StartGame extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+	
 		Pane pane = new Pane();
 		render.update_map(player);
 		FlowPane root = new FlowPane();
@@ -69,7 +74,7 @@ public class StartGame extends Application {
 					
 					if (x <= 16) {
 						if (render.get_map()[(int)y][(int)x] == 0) {
-							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 8));
+							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 8, render, player));
 							render.update_map(player);
 						
 						}
@@ -110,7 +115,7 @@ public class StartGame extends Application {
 					double y =  event.getSceneY()/64;
 					if (x <= 16) {
 						if (render.get_map()[(int)y][(int)x] == 0) {
-							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 7));
+							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 7, render, player));
 							render.update_map(player);
 							
 						}
@@ -142,11 +147,15 @@ public class StartGame extends Application {
 		
 		Button test = new Button("Test");
 		test.setOnAction(e-> {
-			Projectile p = new Projectile();
-			pane.getChildren().add(p.getI());
-			p.move(gen.get_arsenal().get(0), render);
+//			Projectile p = new Projectile();
+//			pane.getChildren().add(p.getI());
+//			p.move(gen.get_arsenal().get(0), render);
 		});
-		
+		MediaPlayer musicplayer;
+		Media mp3music = new Media(getClass().getResource("/msuic/Music.mp3").toURI().toString());
+		musicplayer= new MediaPlayer(mp3music);
+		musicplayer.setAutoPlay(true);
+		musicplayer.setVolume(1.0);
 		test.setTranslateX(30);
 		test.setTranslateY(550);
 		vb.getChildren().add(test);

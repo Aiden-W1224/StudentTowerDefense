@@ -1,4 +1,8 @@
-
+/**
+ * Setters and getters for currency and health in game
+ * @author aiden
+ *
+ */
 public class Player {
 	private double GPA;
 	private int tuition;
