@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Enemy 
 {
@@ -7,8 +8,7 @@ public abstract class Enemy
 	private final int START_Y = 11;
 	private final int STANDBY_X = -1;
 	private final int STANDBY_Y = -1;
-	private final int TILE_SIZE = 64; 
-	private boolean tileType;
+	private final int TILE_SIZE = 64;
 	private int health;
 	private Enemy_animation doll;
 	
@@ -25,7 +25,6 @@ public abstract class Enemy
 	public int get_previous_y() { return this.previous_y; }
 	public void set_health(int health) { this.health = health; }
 	public int get_health() { return this.health; }
-	public boolean getTileType() {return this.tileType;}
 	public Enemy_animation get_doll() { return this.doll; }
 	
 	public Enemy() 
@@ -48,6 +47,9 @@ public abstract class Enemy
 		this.true_y = START_Y;
 	}
 	
+	/**
+	 * Removes enemy from array board 
+	 */
 	public void eliminate() 
 	{
 		this.true_x = STANDBY_X;
@@ -55,53 +57,92 @@ public abstract class Enemy
 		this.health = 0;
 	}
 	
-public void move(int[][] map) {
-		
-		if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) || (map[true_y - 1][true_x] == 3) && (true_y - 1 != previous_y)) 
-		{
-			if (map[true_y - 1][true_x] == 3) {
-				tileType = true;
-			}else {
-				tileType = false;
+	public int randInt() {
+		Random rand = new Random();
+		int n = rand.nextInt(2) + 1;
+		return n;
+	}
+	
+	/**
+	 * Pathfinding algorithm for enemy movement 
+	 * @param map takes current integer map as parameters 
+	 */
+	
+	public void move(int[][] map) 
+	{
+		//13 path marker turn right 
+		if ((map[true_y - 1][true_x] == 13) && (true_y - 1 != previous_y)) {
+			this.previous_y = true_y;
+			this.previous_x = true_x;
+			this.true_x += 1;
+			
+		}
+		//path above and path to the left
+		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) && (map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) {
+			int choice = randInt();
+			//System.out.println(choice);
+			if (choice == 1) {
+				this.previous_x = true_x;
+				this.previous_y = true_y;
+				this.true_y -=1;
 			}
+			else {
+				this.previous_y = true_y;
+				this.previous_x = true_x;
+				this.true_x -= 1;
+			}
+		}
+		
+		//path above and path to the right  
+		else if ((map[true_y - 1][true_x] == 1) && (true_y + 1 != previous_y) && (map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) {
+			int choice = randInt();
+			System.out.println(choice);
+			if (choice == 1) {
+				this.previous_x = true_x;
+				this.previous_y = true_y;
+				this.true_y +=1;
+			}
+			else {
+				this.previous_y = true_y;
+				this.previous_x = true_x;
+				this.true_x -= 1;
+			}
+		}
+		
+		
+		
+		
+		//If one above current place is a path and that location isn't the previous location 
+		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y)) 
+		{
+			//move up
 			this.previous_x = true_x;
 			this.previous_y = true_y;
 			this.true_y -=1;
 		}
-		else if ((map[true_y + 1][true_x] == 1) && (true_y + 1 != previous_y)|| (map[true_y + 1][true_x] == 3) && (true_y+ 1 != previous_y)) 
+		else if ((map[true_y + 1][true_x] == 1) && (true_y + 1 != previous_y)) 
 		{
-			if (map[true_y + 1][true_x] == 3) {
-				tileType = true;			
-				}else {
-					tileType = false;
-				}
-			
+			//move down
 			this.previous_x = true_x;
 			this.previous_y = true_y;
 			this.true_y += 1;
-		} 
-		
-		else if ((map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)|| (map[true_y][true_x -1] == 3) && (true_x - 1 != previous_x)) 
+		}
+		else if ((map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) 
 		{
-			if (map[true_y][true_x-1] == 3) {
-				tileType = true;
-			}else {
-				tileType = false;
-			}
+			//move left 
 			this.previous_y = true_y;
 			this.previous_x = true_x;
 			this.true_x -= 1;
 		}
-		else if ((map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)||(map[true_y][true_x + 1] == 3) && (true_x + 1 != previous_x)) 
+		else if ((map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) 
 		{
-			if (map[true_y][true_x+1] == 3) {
-				tileType = true;
-			}else {
-				tileType = false;
-			}
+			//move right
 			this.previous_y = true_y;
 			this.previous_x = true_x;
 			this.true_x += 1;
+		}
+		else {
+			this.eliminate();
 		}
 	}
 	
@@ -116,4 +157,3 @@ public void move(int[][] map) {
 		return ("(" + true_x + ", " + true_y + ", " + health + ")");
 	}
 }
-
