@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Enemy 
 {
@@ -46,42 +47,102 @@ public abstract class Enemy
 		this.true_y = START_Y;
 	}
 	
+	/**
+	 * Removes enemy from array board 
+	 */
 	public void eliminate() 
 	{
 		this.true_x = STANDBY_X;
 		this.true_y = STANDBY_Y;
 		this.health = 0;
 	}
+	
+	public int randInt() {
+		Random rand = new Random();
+		int n = rand.nextInt(2) + 1;
+		return n;
+	}
+	
 	/**
-	 * movement for enemy
-	 * @param map
+	 * Pathfinding algorithm for enemy movement 
+	 * @param map takes current integer map as parameters 
 	 */
 	
 	public void move(int[][] map) 
 	{
+		//13 path marker turn right 
+//		if ((map[true_y - 1][true_x] == 13) && (true_y - 1 != previous_y)) {
+//			this.previous_y = true_y;
+//			this.previous_x = true_x;
+//			this.true_x += 1;
+//			
+//		}
+//		//path above and path to the left
+//		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) && (map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) {
+//			int choice = randInt();
+//			//System.out.println(choice);
+//			if (choice == 1) {
+//				this.previous_x = true_x;
+//				this.previous_y = true_y;
+//				this.true_y -=1;
+//			}
+//			else {
+//				this.previous_y = true_y;
+//				this.previous_x = true_x;
+//				this.true_x -= 1;
+//			}
+//		}
+//		
+//		//path above and path to the right  
+//		else if ((map[true_y - 1][true_x] == 1) && (true_y + 1 != previous_y) && (map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) {
+//			int choice = randInt();
+//			System.out.println(choice);
+//			if (choice == 1) {
+//				this.previous_x = true_x;
+//				this.previous_y = true_y;
+//				this.true_y +=1;
+//			}
+//			else {
+//				this.previous_y = true_y;
+//				this.previous_x = true_x;
+//				this.true_x -= 1;
+//			}
+//		}
+		
+		
+		
+		
+		//If one above current place is a path and that location isn't the previous location 
 		if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y)) 
 		{
+			//move up
 			this.previous_x = true_x;
 			this.previous_y = true_y;
 			this.true_y -=1;
 		}
 		else if ((map[true_y + 1][true_x] == 1) && (true_y + 1 != previous_y)) 
 		{
+			//move down
 			this.previous_x = true_x;
 			this.previous_y = true_y;
 			this.true_y += 1;
 		}
 		else if ((map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) 
 		{
+			//move left 
 			this.previous_y = true_y;
 			this.previous_x = true_x;
 			this.true_x -= 1;
 		}
 		else if ((map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) 
 		{
+			//move right
 			this.previous_y = true_y;
 			this.previous_x = true_x;
 			this.true_x += 1;
+		}
+		else {
+			this.eliminate();
 		}
 	}
 	
