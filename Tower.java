@@ -45,12 +45,40 @@ public abstract class Tower
 	}
 	
 	
-	public void update(Pane pane, Enemy enemy) {
+	public void update(Pane pane, ArrayList<Enemy> enemies) {
 		//System.out.println("Shot fired: " + this.get_shots_fired());
 		this.pane = pane;
-		this.enemy = enemy;
+		this.enemy = this.target(enemies);
 		shoot();
 		//timer.scheduleAtFixedRate(shooting, (long)100, (long)300);
+		
+	}
+	
+	/**
+	 * 
+	 * @param targets Takes ArrayList of Type Enemy an calculates the closet enemy to the tower by calculating the hypotenuse
+	 * between tower and enemy and targeting the closest one 
+	 * @return Enemy to target
+	 */
+	public Enemy target(ArrayList<Enemy> targets) {
+		Enemy closest = targets.get(0);
+		double currentHyp;
+		//sets previous hypotenuse to the hypotenuse of the first enemy in the wave 
+		double previousHyp = (Math.sqrt( Math.pow(Math.abs(closest.get_doll().getLayoutX() - this.getScreenX()), 2)+ Math.pow(Math.abs(closest.get_doll().getLayoutY() - this.getScreenY()), 2)));;
+		for (Enemy E : targets) {
+			//calculates current enemy's x and y 
+			double x = Math.abs(this.getScreenX() - E.get_doll().getLayoutX());
+			double y = Math.abs(this.getScreenY() - E.get_doll().getLayoutY());
+			currentHyp = (Math.sqrt( Math.pow(x, 2)+ Math.pow(y, 2)));
+			
+			if (currentHyp < previousHyp) {
+				closest = E;
+				previousHyp = currentHyp;
+			}
+		}
+		
+		
+		return closest;
 		
 	}
 	

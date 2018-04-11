@@ -152,7 +152,7 @@ public class StartGame extends Application {
 //			p.move(gen.get_arsenal().get(0), render);
 		});
 		MediaPlayer musicplayer;
-		Media mp3music = new Media(getClass().getResource("/msuic/Music.mp3").toURI().toString());
+		Media mp3music = new Media(getClass().getResource("/music/Music.mp3").toURI().toString());
 		musicplayer= new MediaPlayer(mp3music);
 		musicplayer.setAutoPlay(true);
 		musicplayer.setVolume(1.0);
