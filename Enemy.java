@@ -70,50 +70,49 @@ public abstract class Enemy
 	
 	public void move(int[][] map) 
 	{
+
 		//13 path marker turn right 
-//		if ((map[true_y - 1][true_x] == 13) && (true_y - 1 != previous_y)) {
-//			this.previous_y = true_y;
-//			this.previous_x = true_x;
-//			this.true_x += 1;
-//			
-//		}
-//		//path above and path to the left
-//		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) && (map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) {
-//			int choice = randInt();
-//			//System.out.println(choice);
-//			if (choice == 1) {
-//				this.previous_x = true_x;
-//				this.previous_y = true_y;
-//				this.true_y -=1;
-//			}
-//			else {
-//				this.previous_y = true_y;
-//				this.previous_x = true_x;
-//				this.true_x -= 1;
-//			}
-//		}
-//		
-//		//path above and path to the right  
-//		else if ((map[true_y - 1][true_x] == 1) && (true_y + 1 != previous_y) && (map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) {
-//			int choice = randInt();
-//			System.out.println(choice);
-//			if (choice == 1) {
-//				this.previous_x = true_x;
-//				this.previous_y = true_y;
-//				this.true_y +=1;
-//			}
-//			else {
-//				this.previous_y = true_y;
-//				this.previous_x = true_x;
-//				this.true_x -= 1;
-//			}
-//		}
+		if ((map[true_y - 1][true_x] == 13) && (true_y - 1 != previous_y)) {
+			this.previous_y = true_y;
+			this.previous_x = true_x;
+			this.true_x += 1;
+			
+		}
+		//path above and path to the left
+		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) && (map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) {
+			int choice = randInt();
+			//System.out.println(choice);
+			if (choice == 1) {
+				this.previous_x = true_x;
+				this.previous_y = true_y;
+				this.true_y -=1;
+		}
+			else {
+				this.previous_y = true_y;
+				this.previous_x = true_x;
+				this.true_x -= 1;
+			}
+		}
 		
-		
+		//path above and path to the right  
+		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) && (map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) {
+			int choice = randInt();
+			System.out.println(choice);
+			if (choice == 1) {
+				this.previous_x = true_x;
+				this.previous_y = true_y;
+				this.true_y -=1;
+			}
+			else {
+				this.previous_y = true_y;
+				this.previous_x = true_x;
+				this.true_x += 1;
+			}
+		}
 		
 		
 		//If one above current place is a path and that location isn't the previous location 
-		if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y)) 
+		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y)) 
 		{
 			//move up
 			this.previous_x = true_x;
