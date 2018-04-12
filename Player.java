@@ -1,7 +1,9 @@
 /**
- * Setters and getters for currency and health in game
- * @author aiden
- *
+ * 
+ * @author PICKLE RICK
+ *About Program : This class contains the setters and getters for the player this includes
+ *				  the GPA(health), Tuition (money)
+ *				 
  */
 public class Player {
 	private double GPA;
