@@ -28,6 +28,18 @@ public abstract class Enemy
 	private int previous_x;
 	private int previous_y;
 	
+	private boolean thirteen_tile = false;
+	private int prev_tile = 1;
+	private int rand_dir;
+	
+	public int get_prev_tile() 
+	{
+		return this.prev_tile;
+	}
+	public int get_rand_dir() 
+	{
+		return this.rand_dir;
+	}
 	public int get_appearance() { return this.appearance; }
 	public int get_x() { return this.true_x; }
 	public int get_y() { return this.true_y; }
@@ -83,6 +95,7 @@ public abstract class Enemy
 	public int randInt() {
 		Random rand = new Random();
 		int n = rand.nextInt(2) + 1;
+		this.rand_dir = n;
 		return n;
 	}
 	
@@ -99,9 +112,19 @@ public abstract class Enemy
 		if ((map[true_y - 1][true_x] == 13) && (true_y - 1 != previous_y)) {
 			this.previous_y = true_y;
 			this.previous_x = true_x;
-			this.true_x += 1;
+			this.thirteen_tile = true;
+			this.true_y -= 1;
 			
 		}
+		
+		else if ((map[true_y][true_x + 1] == 13)) 
+		{
+			this.previous_y = true_y;
+			this.previous_x = true_x;
+			this.thirteen_tile = true;
+			this.true_x += 1;
+		}
+		
 		//path above and path to the left
 		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) && (map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) {
 			int choice = randInt();
@@ -118,20 +141,13 @@ public abstract class Enemy
 			}
 		}
 		
-		//path above and path to the right  
-		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) && (map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) {
-			int choice = randInt();
-			System.out.println(choice);
-			if (choice == 1) {
-				this.previous_x = true_x;
-				this.previous_y = true_y;
-				this.true_y -=1;
-			}
-			else {
-				this.previous_y = true_y;
-				this.previous_x = true_x;
-				this.true_x += 1;
-			}
+		else if (thirteen_tile == true) 
+		{
+			this.previous_y = true_y;
+			this.previous_x = true_x;
+			this.true_x += 1;
+			this.thirteen_tile = false;
+			this.prev_tile = 13;
 		}
 		
 		
@@ -141,13 +157,15 @@ public abstract class Enemy
 			//move up
 			this.previous_x = true_x;
 			this.previous_y = true_y;
-			this.true_y -=1;
+			this.prev_tile = 1;
+			this.true_y -= 1;
 		}
 		else if ((map[true_y + 1][true_x] == 1) && (true_y + 1 != previous_y)) 
 		{
 			//move down
 			this.previous_x = true_x;
 			this.previous_y = true_y;
+			this.prev_tile = 1;
 			this.true_y += 1;
 		}
 		else if ((map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) 
@@ -155,6 +173,7 @@ public abstract class Enemy
 			//move left 
 			this.previous_y = true_y;
 			this.previous_x = true_x;
+			this.prev_tile = 1;
 			this.true_x -= 1;
 		}
 		else if ((map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) 
@@ -162,6 +181,7 @@ public abstract class Enemy
 			//move right
 			this.previous_y = true_y;
 			this.previous_x = true_x;
+			this.prev_tile = 1;
 			this.true_x += 1;
 		}
 		else {

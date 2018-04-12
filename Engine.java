@@ -61,12 +61,17 @@ public class Engine
 					if (timeline.getKeyFrames().contains(NORTH)) 
 					{
 						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
-								((enemy.get_doll().getLayoutX() % 64) == 0) && map[mapY - 1][mapX] != 1) 
+								((enemy.get_doll().getLayoutX() % 64) == 0) && ((map[mapY - 1][mapX] != 1)
+										&& (map[mapY - 1][mapX] != 13))) 
 						{
 							//System.out.println("What is this :" + enemy.get_doll().getLayoutY() % 64);
 							timeline.stop();
 							timeline.getKeyFrames().clear();
-							if (map[mapY][mapX - 1] == 1) 
+							if (map[mapY][mapX] == 13) 
+							{
+								timeline.getKeyFrames().add(EAST);
+							}
+							else if (map[mapY][mapX - 1] == 1) 
 							{
 								timeline.getKeyFrames().add(WEST);
 							}
@@ -82,11 +87,20 @@ public class Engine
 					else if (timeline.getKeyFrames().contains(WEST)) 
 					{
 						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
-								((enemy.get_doll().getLayoutX() % 64) == 0) && map[mapY][mapX - 1] != 1) 
+								((enemy.get_doll().getLayoutX() % 64) == 0) && ((map[mapY][mapX - 1] != 1)
+										|| ((map[mapY - 1][mapX] == 1) && (map[mapY][mapX - 1] == 1) && 
+												enemy.get_rand_dir() == 1)))
 						{
 							timeline.stop();
 							timeline.getKeyFrames().clear();
-							if (map[mapY - 1][mapX] == 1) 
+							if ((map[mapY - 1][mapX] == 1) && (map[mapY][mapX - 1] == 1)) 
+							{
+								if (enemy.get_rand_dir() == 1) 
+								{
+									timeline.getKeyFrames().add(NORTH);
+								}
+							}
+							else if ((map[mapY - 1][mapX] == 1) && map[mapY][mapX - 1] != 1) 
 							{
 								timeline.getKeyFrames().add(NORTH);
 							}
@@ -103,7 +117,7 @@ public class Engine
 					{
 						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
 								((enemy.get_doll().getLayoutX() % 64) == 0) 
-								&& (mapX + 1 > 16 || map[mapY][mapX + 1] != 1)) 
+								&& (mapX + 1 > 16 || (map[mapY][mapX + 1] != 1 && map[mapY][mapX + 1] != 13))) 
 						{
 							timeline.stop();
 							if (mapX == 16) 
@@ -115,7 +129,7 @@ public class Engine
 							{
 								timeline.getKeyFrames().add(NORTH);
 							}
-							else if (map[mapY + 1][mapX] == 1) 
+							else if ((map[mapY + 1][mapX] == 1) && (map[mapY][mapX] != 13)) 
 							{
 								timeline.getKeyFrames().add(SOUTH);
 							}
@@ -163,7 +177,7 @@ public class Engine
 								enemy.get_doll().getLayoutY() > T.getGUIBoundsAbove(2) && enemy.get_doll().getLayoutY() < T.getGUIBoundsBelow(2)) {
 							
 							//System.out.println("Enemy Location: (x,y) " + enemy.get_doll().getLayoutX() + " " + enemy.get_doll().getLayoutY());
-							T.update(pane, enemy);
+							T.update(pane, wave);
 							
 						}
 					}
@@ -208,7 +222,7 @@ public class Engine
 					{
 						enemy.move(map);
 						map[enemy.get_y()][enemy.get_x()] = enemy.get_appearance();
-						map[enemy.get_previous_y()][enemy.get_previous_x()] = 1;
+						map[enemy.get_previous_y()][enemy.get_previous_x()] = enemy.get_prev_tile();
 					}
 					if (enemy.get_health() <= 0 && enemy.get_x() != -1)
 					{
