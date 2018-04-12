@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Random;
 /**
  * 
- * @author jacob, athena, danial, aiden, PICKLE RICK
+ * @author PICKLE RICK
  * About Program : This class contains the algorithm to move the enemy throughout the game.
  * 				   It checks if the space is free and makes it way through the game not being able to
  *				   backtrack in the array. The array is set a starting point which moves through the array
