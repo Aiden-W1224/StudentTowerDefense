@@ -11,12 +11,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-/*
- * Has instructions for which towers and enemies correspond to which numbers
+/**
  * 
+ *@author PICKLE RICK
+ *About Program : This class contains the 2D array path, and also updates the GUI according to the
+ 		  different Integers in the array list.
+ *				  
+ *
  */
 public class Render
 {
+	/*
+	 * map = [row][col]
+	 * 
+	 * 0 = grass, places where towers can be placed
+	 * 1 = path of the enemy
+	 * 13 = tells the enemy to go right everytime
+	 * 6 = Score
+	 * 22 = Tuition(Money to buy towers)
+	 */
 	private int[][] map = {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
@@ -31,6 +44,8 @@ public class Render
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 6, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 22, 0, 0},
 			};
+	
+	
 	private Level_generator foo = new Level_generator();
 	private Canvas canvas = new Canvas(1088, 768);
 	private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -68,6 +83,12 @@ public class Render
 		return this.canvas;
 	}
 	
+	/**
+	 * This method iterates through the [row][col] of the map,
+	 * and changes the GUI of the map according to the integers in the
+	 * 2d array
+	 * @param player
+	 */
 	public void update_map(Player player) 
 	{
 		for (int i = 0; i < this.map.length; i++) 
