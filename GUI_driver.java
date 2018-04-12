@@ -20,6 +20,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+/**
+ * 
+ * @author PICKLE RICK
+ *About Program : This class contains the initial start of the game, this class
+ *				  acts like the manager of the game.
+ *				  
+ *				  
+ *
+ */
 public class GUI_driver extends Application
 {
 	private Render noot = new Render();
