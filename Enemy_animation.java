@@ -66,7 +66,23 @@ public class Enemy_animation extends ImageView
 	public void remove_enemy_end(Pane pane, Player player, Render render) 
 	{
 		pane.getChildren().remove(this);
-		player.setGPA(player.getGPA() - 1);
+		if (player.getGPA() > 0) {
+			player.setGPA(player.getGPA() - 1);
+		}
+		else {
+			ImageView gameover = new ImageView(new Image("gameover.png"));
+			gameover.setTranslateX(-100);
+			pane.getChildren().add(gameover);
+			FadeTransition ft = new FadeTransition(Duration.millis(3000), gameover);
+			ft.setFromValue(1.0);
+		    ft.setToValue(0.0);
+		    ft.setCycleCount(1);
+		    ft.setAutoReverse(false);
+			ft.play();
+			ft.playFromStart();
+			
+		}
+		
 		render.update_map(player);
 		System.out.println("GPA: " + player.getGPA());
 	}
