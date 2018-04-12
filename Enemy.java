@@ -1,6 +1,16 @@
 import java.util.ArrayList;
 import java.util.Random;
-
+/**
+ * 
+ * @author jacob, athena, danial, aiden, PICKLE RICK
+ * About Program : This class contains the algorithm to move the enemy throughout the game.
+ * 				   It checks if the space is free and makes it way through the game not being able to
+ *				   backtrack in the array. The array is set a starting point which moves through the array
+ * 				   once it has reached the end of the path the program will then calculate subtracting from GPA.
+ * 				   In the text based version it prints out where the enemy is in the array, and also the health of 
+ *				   Enemy.
+ *
+ */
 public abstract class Enemy 
 {
 	private int appearance;
