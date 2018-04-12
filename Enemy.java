@@ -46,16 +46,24 @@ public abstract class Enemy
 		this.doll = new Enemy_animation();
 	}
 	
+	
+	
 	public void set_appearance(int app) 
 	{
 		this.appearance = app;
 	}
 	
+	
+	/**
+	 * this set the enemy on the map at its starting location
+	 */
 	public void set_on_map() 
 	{
 		this.true_x = START_X;
 		this.true_y = START_Y;
 	}
+	
+	
 	
 	/**
 	 * Removes enemy from array board 
@@ -67,17 +75,23 @@ public abstract class Enemy
 		this.health = 0;
 	}
 	
+	
+	/**
+	 * 
+	 * @return this returns either a 1 or a 2, which allows for our enemy to make a choice between paths
+	 */
 	public int randInt() {
 		Random rand = new Random();
 		int n = rand.nextInt(2) + 1;
 		return n;
 	}
 	
+	
+	
 	/**
 	 * Pathfinding algorithm for enemy movement 
 	 * @param map takes current integer map as parameters 
 	 */
-	
 	public void move(int[][] map) 
 	{
 
@@ -155,12 +169,21 @@ public abstract class Enemy
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @param damage, takes damage as a parameter and subtracts it from the enemy health.
+	 */
 	public void hit(int damage) 
 	{
 		this.health -= damage;
 	}
 	
 	
+	
+	/**
+	 * This method shows where the enemy is in the game in the text based version of the game.
+	 */
 	public String toString() 
 	{
 		return ("(" + true_x + ", " + true_y + ", " + health + ")");
