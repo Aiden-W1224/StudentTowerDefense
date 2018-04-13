@@ -15,10 +15,13 @@ public class SceneSelect {
 	
 	private Image map = new Image("TestMap.png");
 	
-	
+	/**
+	 * Everything here occurs when the "Game Info" button is clicked.
+	 * @param menuButton
+	 * @return Returns the infoScene
+	 */
 	public Scene infoScene(Button menuButton) {
 		
-		//Everything here occurs when the "Game Info" button is clicked.
 		StackPane instructions = new StackPane();
 		Scene infoScene = new Scene(instructions, 1280, 960);
 		
@@ -37,9 +40,13 @@ public class SceneSelect {
 				+ " The difficulty increases every round with more enemies and stronger "
 				+ "enemies coming in waves. \n\n"
 				+ "\n"
-				+ " Tower Info: Stay tuned for more updates in the near future! \n"
-				+ "\n"
-				+ " Enemy Info: Stay tuned for more updates in the near future!");
+				+ " Tower Info: There are three towers classes each do a different amount of damage to the enemies\n\n"
+				+ "They cost different amounts of tuition. Click on the tower you want and place it strategically to \n\n"
+				+ "defend off the enemies."
+				+ "\n \n"
+				+ " Enemy Info: The enemies will move through the maze, they have two paths to take, you must set up your \n\n"
+				+ "towers strategically to compensate for the additional path they can take. Once the enemy reaches the end it will\n\n"
+				+ "do damage to your precious GPA and lower it. Once your GPA reaches zero it's game over. ");
 	    
 		text.setFill(Color.BLACK);
 	    text.setStyle("-fx-font: 20 arial;");
@@ -48,14 +55,16 @@ public class SceneSelect {
 	    System.out.print(javafx.scene.text.Font.getFamilies());
 		
 	    //moving text into center position
-	    text.setTranslateX(-150);
-		text.setTranslateY(-100);
+	    text.setTranslateX(-50);
+		text.setTranslateY(-150);
 		welcomeText.setTranslateX(-10);
 		welcomeText.setTranslateY(-400);
 		//infoScene.setFill(Color.ALICEBLUE);
 		instructions.getChildren().add(text);
 		instructions.getChildren().add(welcomeText);
 		instructions.getChildren().add(menuButton);
+		
+		menuButton.setTranslateY(200);
   
 		
 		return infoScene;
