@@ -1,5 +1,8 @@
 import java.util.ArrayList;
-
+/**
+* @author PickleRick
+* This generates the different levels in the game.
+*/
 public class Level_generator 
 {
 	private ArrayList<Enemy> wave = new ArrayList<Enemy>();
