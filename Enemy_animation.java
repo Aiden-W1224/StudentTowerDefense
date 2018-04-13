@@ -24,8 +24,11 @@ import javafx.util.Duration;
 
 public class Enemy_animation extends ImageView
 {
-	private final int INIT_GAME_X = (64*9);
-	private final int INIT_GAME_Y = (64*12);
+	private Render render;
+	
+	private int INIT_GAME_X = (64*9);
+	private int INIT_GAME_Y = (64*12);
+	private final int TILE_SIZE = 64;
 	private int true_game_x;
 	private int true_game_y;
 	
@@ -38,11 +41,40 @@ public class Enemy_animation extends ImageView
 	/**
 	* About: Constructor sets intial game x and y at starting location
 	*/
-	public Enemy_animation() 
+	public Enemy_animation(Render render) 
 	{
 		//setImage(new Image("res/raoh.png"));
-		this.true_game_x = INIT_GAME_X;
-		this.true_game_y = INIT_GAME_Y;
+		this.render = render;
+		if (render.rand() == false) 
+		{
+			this.true_game_x = INIT_GAME_X;
+			this.true_game_y = INIT_GAME_Y;
+		}
+		else 
+		{
+			if (render.get_start_x() == 0)
+			{
+				this.INIT_GAME_X = -1*TILE_SIZE;
+				this.INIT_GAME_Y = render.get_start_y()*TILE_SIZE;
+			}
+			else if (render.get_start_x() == 16) 
+			{
+				this.INIT_GAME_X = (render.get_start_x() + 1)*TILE_SIZE;
+				this.INIT_GAME_Y = render.get_start_y()*TILE_SIZE;
+			}
+			else if (render.get_start_y() == 0) 
+			{
+				this.INIT_GAME_Y = -1*TILE_SIZE;
+				this.INIT_GAME_X = render.get_start_x()*TILE_SIZE;
+			}
+			else if (render.get_start_y() == 11) 
+			{
+				this.INIT_GAME_Y = (render.get_start_y() + 1)*TILE_SIZE;
+				this.INIT_GAME_X = render.get_start_x()*TILE_SIZE;
+			}
+			this.true_game_x = INIT_GAME_X;
+			this.true_game_y = INIT_GAME_Y;
+		}
 	}
 	
 	/**
