@@ -173,7 +173,7 @@ public class StartGame extends Application {
 		Media mp3music = new Media(getClass().getResource("Music.mp3").toURI().toString());
 		musicplayer= new MediaPlayer(mp3music);
 		musicplayer.setAutoPlay(true);
-		musicplayer.setVolume(0);
+		musicplayer.setVolume(1.0);
 		test.setTranslateX(30);
 		test.setTranslateY(550);
 		vb.getChildren().add(test);
