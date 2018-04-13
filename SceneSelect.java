@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.layout.FlowPane;
+import javafx.geometry.Pos;
 
 public class SceneSelect {
 	
@@ -73,29 +75,56 @@ public class SceneSelect {
 	
 	public Scene MapSelect(Button menuButton)
 	{
+		FlowPane flow = new FlowPane();
+		flow.setPrefWrapLength(1088);
 		BorderPane border = new BorderPane();
 		HBox vb = new HBox();
+		HBox cb = new HBox();
+		cb.setPrefSize(1088, 640);
+		vb.setPrefSize(1088, 128);
+		flow.getChildren().add(vb);
+		flow.getChildren().add(cb);
 		Text t = new Text("Choose Map");
 		t.setFill(Color.BLACK);
 		t.setTranslateX(500);
 		t.setStyle("-fx-font: 50 arial;");
 		vb.getChildren().add(t);
 		vb.getChildren().add(menuButton);
-		Scene scene = new Scene(border, 1088, 768);
+		Scene scene = new Scene(flow, 1200, 768);
 		ImageView map1 = new ImageView(map);
 		map1.setOnMouseClicked(e ->
 		{
 			Stage gameStage = new Stage();
 			StartGame run_game = new StartGame();
+			run_game.map_select(false);
         	try {
 				run_game.start(gameStage);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		});
+		cb.getChildren().add(map1);
+		cb.setAlignment(Pos.CENTER);
+		cb.setSpacing(20);
+		
+		Button random_map = new Button();
+		random_map.setText("Generate random map");
+		random_map.setOnAction(e -> 
+		{
+			Stage gameStage = new Stage();
+			StartGame run_game = new StartGame();
+			run_game.map_select(true);
+			try 
+			{
+				run_game.start(gameStage);
+			} 
+			catch (Exception e1) 
+			{
+				e1.printStackTrace();
+			}
+		});
+		cb.getChildren().add(random_map);
 	
-		border.setCenter(map1);
-		border.setTop(vb);
 		
 		
 		return scene;
