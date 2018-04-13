@@ -14,7 +14,9 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.VLineTo;
 import javafx.util.Duration;
 //import static helpers.Clock.*;
-
+/**
+*About: Creates projectile which fires at enemy towers contains drawing function to animate projectiles 
+*/
 public class Projectile extends ImageView {
 	
 	private double speed;
@@ -32,6 +34,9 @@ public class Projectile extends ImageView {
 		//draw(pane);
 	}
 	
+	/**
+	* Sets projectile x,y at towers x and y 
+	*/
 	public Projectile(double x, double y) {
 		this.x = x;
 		this.y = y;
@@ -57,6 +62,11 @@ public class Projectile extends ImageView {
 		//draw(pane);
 	}
 	
+	/**
+	* About: draws projectile starting at location of tower and moves towards Enemy target 
+	* @param target : Type Enemy, gets target x and y and fires projectile towards there 
+	* @param pane : Type Pane, adds and removes projectile from map  
+	*/
 	public void draw(Pane pane, Enemy target) {
 		
 		TranslateTransition T = new TranslateTransition();
@@ -76,13 +86,17 @@ public class Projectile extends ImageView {
 		});
 		
 		pane.getChildren().add(circ);
-		//System.out.println("Projectile x, y: " +	circ.getLayoutX() + circ.getLayoutY());
+		
 		
 		if (projectile.getLayoutX() == target.get_doll().getLayoutX()+32.0 && projectile.getLayoutY() == target.get_doll().getLayoutY()+32.0) {
 			pane.getChildren().remove(this.getProjectile());
 		}
 		
 	}
+	
+	/**
+	*About : Centers projectile x and y to be in the middle of the tower. Returns centered projectile  
+	*/
 	public Circle getProjectile() {
 		this.projectile.setTranslateX(x+32.0);
 		this.projectile.setTranslateY(y+32.0);
@@ -91,9 +105,7 @@ public class Projectile extends ImageView {
 	public void setX(int x) {
 		this.x = x;
 	}
-//	public int getY() {
-//		return y;
-//	}
+
 	public void setY(int y) {
 		this.y = y;
 	}
