@@ -16,12 +16,37 @@ public class Engine
 	private int true_doll_x;
 	private int true_doll_y;
 	
+	private final int TILE_SIZE = 64;
+	
 	public void runGame(Level_generator generator, int[][] map, Pane pane, Player player, Render render) 
 	{	
 		ArrayList<Enemy> wave = generator.get_wave();
 		int delay = 0;
 		true_doll_x = (64*9);
 		true_doll_y = (64*12);
+		if (render.rand() == true) 
+		{
+			if (render.get_start_x() == 0)
+			{
+				this.true_doll_x = -1*TILE_SIZE;
+				this.true_doll_y = render.get_start_y()*TILE_SIZE;
+			}
+			else if (render.get_start_x() == 16) 
+			{
+				this.true_doll_x = (render.get_start_x() + 1)*TILE_SIZE;
+				this.true_doll_y = render.get_start_y()*TILE_SIZE;
+			}
+			else if (render.get_start_y() == 0) 
+			{
+				this.true_doll_y = -1*TILE_SIZE;
+				this.true_doll_x = render.get_start_x()*TILE_SIZE;
+			}
+			else if (render.get_start_y() == 11) 
+			{
+				this.true_doll_y = (render.get_start_y() + 1)*TILE_SIZE;
+				this.true_doll_x = render.get_start_x()*TILE_SIZE;
+			}
+		}
 		for (Enemy enemy : generator.get_wave_02()) 
 		{
 			//Place every enemy at the start of the map 
@@ -47,7 +72,22 @@ public class Engine
 				(enemy.get_doll()).setLayoutX((enemy.get_doll()).getLayoutX() - 2);
 			});
 			timeline.setCycleCount(Animation.INDEFINITE);
-			timeline.getKeyFrames().add(NORTH);
+			if (true_doll_x < 0) 
+			{
+				timeline.getKeyFrames().add(EAST);
+			}
+			else if (true_doll_x > render.get_start_x()*TILE_SIZE) 
+			{
+				timeline.getKeyFrames().add(WEST);
+			}
+			else if (true_doll_y < 0) 
+			{
+				timeline.getKeyFrames().add(SOUTH);
+			}
+			else if (true_doll_y > render.get_start_y()*TILE_SIZE) 
+			{
+				timeline.getKeyFrames().add(NORTH);
+			}
 			timeline.setDelay(Duration.millis(1000*delay));
 			delay++;
 			AnimationTimer timer = new AnimationTimer() 
@@ -60,13 +100,16 @@ public class Engine
 					//going north and turns west or east
 					if (timeline.getKeyFrames().contains(NORTH)) 
 					{
-						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
-								((enemy.get_doll().getLayoutX() % 64) == 0) && ((map[mapY - 1][mapX] != 1)
-										&& (map[mapY - 1][mapX] != 13))) 
+						if (((enemy.get_doll().getLayoutY() % 64 == 0) && (enemy.get_doll().getLayoutX() % 64 == 0)) 
+								&& ((mapY - 1 < 0) || ((map[mapY - 1][mapX] != 1) && (map[mapY - 1][mapX] != 13))))
 						{
 							//System.out.println("What is this :" + enemy.get_doll().getLayoutY() % 64);
 							timeline.stop();
 							timeline.getKeyFrames().clear();
+							if (mapY == 0) 
+							{
+								enemy.get_doll().remove_enemy_end(pane, player, render);
+							}
 							if (map[mapY][mapX] == 13) 
 							{
 								timeline.getKeyFrames().add(EAST);
@@ -87,12 +130,16 @@ public class Engine
 					else if (timeline.getKeyFrames().contains(WEST)) 
 					{
 						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
-								((enemy.get_doll().getLayoutX() % 64) == 0) && ((map[mapY][mapX - 1] != 1)
+								((enemy.get_doll().getLayoutX() % 64) == 0) && (mapX < 17) && (mapX - 1 < 0 || ((map[mapY][mapX - 1] != 1)
 										|| ((map[mapY - 1][mapX] == 1) && (map[mapY][mapX - 1] == 1) && 
-												enemy.get_rand_dir() == 1)))
+												enemy.get_rand_dir() == 1))))
 						{
 							timeline.stop();
 							timeline.getKeyFrames().clear();
+							if (mapX == 0) 
+							{
+								enemy.get_doll().remove_enemy_end(pane, player, render);
+							}
 							if ((map[mapY - 1][mapX] == 1) && (map[mapY][mapX - 1] == 1)) 
 							{
 								if (enemy.get_rand_dir() == 1) 
@@ -141,10 +188,15 @@ public class Engine
 					else if (timeline.getKeyFrames().contains(SOUTH)) 
 					{
 						if (((enemy.get_doll().getLayoutY() % 64) == 0) && 
-								((enemy.get_doll().getLayoutX() % 64) == 0) && map[mapY + 1][mapX] != 1) 
+								((enemy.get_doll().getLayoutX() % 64) == 0) && ((
+										(mapY + 1) > 11) || (map[mapY + 1][mapX] != 1))) 
 						{
 							timeline.stop();
 							timeline.getKeyFrames().clear();
+							if (mapY == 11) 
+							{
+								enemy.get_doll().remove_enemy_end(pane, player, render);
+							}
 							if (map[mapY][mapX - 1] == 1) 
 							{
 								timeline.getKeyFrames().add(WEST);
@@ -210,13 +262,10 @@ public class Engine
 			{
 				if (enemy.get_x() != -1) 
 				{
-					if ((enemy.get_x() == 16) && (enemy.get_y() == 3)) 
+					if ((enemy.get_x() == render.get_end_x()) && (enemy.get_y() == render.get_end_y())) 
 					{
-					
 						map[enemy.get_y()][enemy.get_x()] = 1;
 						enemy.eliminate();
-						
-						
 					}
 					else 
 					{
@@ -241,7 +290,7 @@ public class Engine
 				System.out.println("Other X property: " + wave.get(enemyNum).get_doll().getLayoutX());
 				System.out.println("Other other X property: " + wave.get(enemyNum).get_doll().getX());
 				map[wave.get(enemyNum).get_y()][wave.get(enemyNum).get_x()] = 
-					wave.get(enemyNum).get_appearance();
+				wave.get(enemyNum).get_appearance();
 				enemyNum++;
 			}
 			
