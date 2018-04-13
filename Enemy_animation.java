@@ -75,9 +75,9 @@ public class Enemy_animation extends ImageView
 			pane.getChildren().add(gameover);
 			FadeTransition ft = new FadeTransition(Duration.millis(3000), gameover);
 			ft.setFromValue(1.0);
-		    ft.setToValue(0.0);
-		    ft.setCycleCount(1);
-		    ft.setAutoReverse(false);
+		    	ft.setToValue(0.0);
+		        ft.setCycleCount(1);
+		        ft.setAutoReverse(false);
 			ft.play();
 			ft.playFromStart();
 			
