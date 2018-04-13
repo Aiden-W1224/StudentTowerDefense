@@ -5,6 +5,7 @@ import java.util.ArrayList;
 */
 public class Level_generator 
 {
+	private Render render;
 	private ArrayList<Enemy> wave = new ArrayList<Enemy>();
 	private ArrayList<Tower> arsenal = new ArrayList<Tower>();
 	private int TA_populate;
@@ -81,11 +82,12 @@ public class Level_generator
 		this.level += 1;
 	}
 	
-	public Level_generator() 
+	public Level_generator(Render render) 
 	{
 		this.level = 1;
 		this.TA_populate = 0;
 		this.researcher_populate = 0;
+		this.render = render;
 	}
 	
 	public void create_wave() 
@@ -94,12 +96,12 @@ public class Level_generator
 		set_populate();
 		for (int i = 0; i < this.TA_populate; i++) 
 		{
-			Enemy enemy = new TA();
+			Enemy enemy = new TA(render);
 			this.wave.add(enemy);
 		}
 		for (int i = 0; i < this.researcher_populate; i++) 
 		{
-			Enemy enemy = new Researcher();
+			Enemy enemy = new Researcher(render);
 			this.wave.add(enemy);
 		}
 	}
