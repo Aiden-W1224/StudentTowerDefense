@@ -20,16 +20,34 @@ public class StartGame extends Application {
 	
 	private Render render = new Render();
 	private Tower_place tower_place = new Tower_place();
-	private Level_generator gen = new Level_generator();
+	private Level_generator gen = new Level_generator(render);
 	private Engine wave_generator = new Engine();
-	Enemy_animation foobar = new Enemy_animation();
+	Enemy_animation foobar = new Enemy_animation(render);
 	Player player = new Player();
+	private boolean random_map = false;
+	private Random_map_generator map_generator = new Random_map_generator();
+	
 	//Tower towers = new Tower();
+	
+	public void map_select(boolean random_map) 
+	{
+		this.random_map = random_map;
+	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 	
 		Pane pane = new Pane();
+		if (random_map == true) 
+		{
+			int valid_test = map_generator.test_map();
+			while (valid_test != 1) 
+			{
+				this.map_generator = new Random_map_generator();
+				valid_test = map_generator.test_map();
+			}
+			render.set_map(map_generator.get_map(), this.map_generator);
+		}
 		render.update_map(player);
 		FlowPane root = new FlowPane();
 		Scene scene = new Scene(pane);
@@ -73,10 +91,10 @@ public class StartGame extends Application {
 					int y = (int) yDouble;
 					
 					if (x <= 16) {
-						if (render.get_map()[(int)y][(int)x] == 0) {
+						if (render.get_map()[(int)y][(int)x] == 0) 
+						{
 							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 8, render, player));
 							render.update_map(player);
-						
 						}
 					}
 				
@@ -152,10 +170,10 @@ public class StartGame extends Application {
 //			p.move(gen.get_arsenal().get(0), render);
 		});
 		MediaPlayer musicplayer;
-		Media mp3music = new Media(getClass().getResource("/music/Music.mp3").toURI().toString());
+		Media mp3music = new Media(getClass().getResource("Music.mp3").toURI().toString());
 		musicplayer= new MediaPlayer(mp3music);
 		musicplayer.setAutoPlay(true);
-		musicplayer.setVolume(1.0);
+		musicplayer.setVolume(0);
 		test.setTranslateX(30);
 		test.setTranslateY(550);
 		vb.getChildren().add(test);

@@ -32,12 +32,12 @@ public class Render
 	 */
 	private int[][] map = {
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
-			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
-			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0},
-			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-			{0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 1, 1, 1, 13, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
+			{0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0},
+			{0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+			{0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
@@ -45,8 +45,12 @@ public class Render
 			{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 22, 0, 0},
 			};
 	
-	
-	private Level_generator foo = new Level_generator();
+	private Random_map_generator map_generator;
+	private int start_edge_coord_x = 9;
+	private int start_edge_coord_y = 11;
+	private int end_edge_coord_x = 16;
+	private int end_edge_coord_y = 3;
+	private boolean random_map = false;
 	private Canvas canvas = new Canvas(1088, 768);
 	private GraphicsContext gc = canvas.getGraphicsContext2D();
 	private final int GRASS = 0;
@@ -57,6 +61,7 @@ public class Render
 	private final int SECOND_YEAR = 8;
 	private final int SCORE_AREA = 6;
 	private final int TUITION_AREA = 22;
+	private final int CROSS_ROADS = 13;
 	private final Image GRASS_IMAGE = new Image("grass.png");
 	private final Image PATH_IMAGE = new Image("dirt.png");
 	private final Image TA_IMAGE = new Image("raoh.png");
@@ -68,9 +73,41 @@ public class Render
 	
 	public ArrayList<TileType> getTiles() { return this.tiles; }
 	
+	public boolean rand() 
+	{
+		return this.random_map;
+	}
+	
+	public int get_start_x() 
+	{
+		return this.start_edge_coord_x;
+	}
+	public int get_start_y() 
+	{
+		return this.start_edge_coord_y;
+	}
+	public int get_end_x() 
+	{
+		return this.end_edge_coord_x;
+	}
+	public int get_end_y() 
+	{
+		return this.end_edge_coord_y;
+	}
+	
 	public int[][] get_map()
 	{
 		return this.map;
+	}
+	
+	public void set_map(int[][] map, Random_map_generator generator) 
+	{
+		this.start_edge_coord_x = generator.get_start_x();
+		this.start_edge_coord_y = generator.get_start_y();
+		this.end_edge_coord_x = generator.get_end_x();
+		this.end_edge_coord_y = generator.get_end_y();
+		this.random_map = true;
+		this.map = map;
 	}
 	
 	public void set_map(int[][] map) 
@@ -103,6 +140,11 @@ public class Render
 					break;
 					
 				case PATH:
+					this.gc.drawImage(PATH_IMAGE, j*64, i*64);
+					tiles.add(new TileType("path", j, i));
+					break;
+					
+				case CROSS_ROADS:
 					this.gc.drawImage(PATH_IMAGE, j*64, i*64);
 					tiles.add(new TileType("path", j, i));
 					break;

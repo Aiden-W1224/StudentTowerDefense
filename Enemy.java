@@ -13,12 +13,13 @@ import java.util.Random;
  */
 public abstract class Enemy 
 {
+	private Render render;
 	private int appearance;
-	private final int START_X = 9;
-	private final int START_Y = 11;
-	private final int STANDBY_X = -1;
-	private final int STANDBY_Y = -1;
-	private final int TILE_SIZE = 64;
+	private int START_X = 9;
+	private int START_Y = 11;
+	private int STANDBY_X = -1;
+	private int STANDBY_Y = -1;
+	private int TILE_SIZE = 64;
 	private int health;
 	private Enemy_animation doll;
 	
@@ -49,13 +50,14 @@ public abstract class Enemy
 	public int get_health() { return this.health; }
 	public Enemy_animation get_doll() { return this.doll; }
 	
-	public Enemy() 
+	public Enemy(Render render) 
 	{
 		this.true_x = STANDBY_X;
 		this.true_y = STANDBY_Y;
 		this.previous_x = 0;
 		this.previous_y = 0;
-		this.doll = new Enemy_animation();
+		this.render = render;
+		this.doll = new Enemy_animation(render);
 	}
 	
 	
@@ -71,6 +73,11 @@ public abstract class Enemy
 	 */
 	public void set_on_map() 
 	{
+		if (this.render.rand() == true) 
+		{
+			this.START_X = render.get_start_x();
+			this.START_Y = render.get_start_y();
+		}
 		this.true_x = START_X;
 		this.true_y = START_Y;
 	}
@@ -109,7 +116,7 @@ public abstract class Enemy
 	{
 
 		//13 path marker turn right 
-		if ((map[true_y - 1][true_x] == 13) && (true_y - 1 != previous_y)) {
+		if ((true_y - 1 >= 0) && (map[true_y - 1][true_x] == 13) && (true_y - 1 != previous_y)) {
 			this.previous_y = true_y;
 			this.previous_x = true_x;
 			this.thirteen_tile = true;
@@ -117,7 +124,7 @@ public abstract class Enemy
 			
 		}
 		
-		else if ((map[true_y][true_x + 1] == 13)) 
+		else if ((true_x + 1 < 17) && (map[true_y][true_x + 1] == 13)) 
 		{
 			this.previous_y = true_y;
 			this.previous_x = true_x;
@@ -126,7 +133,9 @@ public abstract class Enemy
 		}
 		
 		//path above and path to the left
-		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y) && (map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) {
+		else if ((true_y - 1 >= 0) && (true_x - 1 >= 0) && (map[true_y - 1][true_x] == 1) 
+				&& (true_y - 1 != previous_y) && (map[true_y][true_x - 1] == 1) 
+				&& (true_x - 1 != previous_x)) {
 			int choice = randInt();
 			//System.out.println(choice);
 			if (choice == 1) {
@@ -152,7 +161,7 @@ public abstract class Enemy
 		
 		
 		//If one above current place is a path and that location isn't the previous location 
-		else if ((map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y)) 
+		else if ((true_y - 1 >= 0) && (map[true_y - 1][true_x] == 1) && (true_y - 1 != previous_y)) 
 		{
 			//move up
 			this.previous_x = true_x;
@@ -160,7 +169,7 @@ public abstract class Enemy
 			this.prev_tile = 1;
 			this.true_y -= 1;
 		}
-		else if ((map[true_y + 1][true_x] == 1) && (true_y + 1 != previous_y)) 
+		else if ((true_y + 1 < 12) && (map[true_y + 1][true_x] == 1) && (true_y + 1 != previous_y)) 
 		{
 			//move down
 			this.previous_x = true_x;
@@ -168,7 +177,7 @@ public abstract class Enemy
 			this.prev_tile = 1;
 			this.true_y += 1;
 		}
-		else if ((map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) 
+		else if ((true_x - 1 >= 0) && (map[true_y][true_x - 1] == 1) && (true_x - 1 != previous_x)) 
 		{
 			//move left 
 			this.previous_y = true_y;
@@ -176,7 +185,7 @@ public abstract class Enemy
 			this.prev_tile = 1;
 			this.true_x -= 1;
 		}
-		else if ((map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) 
+		else if ((true_x + 1 < 17) && (map[true_y][true_x + 1] == 1) && (true_x + 1 != previous_x)) 
 		{
 			//move right
 			this.previous_y = true_y;

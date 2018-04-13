@@ -20,22 +20,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-/**
- * 
- * @author PICKLE RICK
- *About Program : This class contains the initial start of the game, this class
- *				  acts like the manager of the game.
- *				  
- *				  
- *
- */
 public class GUI_driver extends Application
 {
-	private Render noot = new Render();
+	private Render render = new Render();
 	private Tower_place tower_place = new Tower_place();
-	private Level_generator gen = new Level_generator();
+	private Level_generator gen = new Level_generator(render);
 	private Engine wave_generator = new Engine();
-	Enemy_animation foobar = new Enemy_animation();
 	
 	private SceneSelect SCENE = new SceneSelect();
 	private Image image = new Image("Testmap.png");
