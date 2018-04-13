@@ -17,6 +17,11 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
+/**
+* About class: Class keeps track of enemy movement and appearance and records death locations withing the array game 
+* and reflects the changes within the GUI game.
+*/
+
 public class Enemy_animation extends ImageView
 {
 	private final int INIT_GAME_X = (64*9);
@@ -30,6 +35,9 @@ public class Enemy_animation extends ImageView
 	private int last_x;
 	private int last_y;
 	
+	/**
+	* About: Constructor sets intial game x and y at starting location
+	*/
 	public Enemy_animation() 
 	{
 		//setImage(new Image("res/raoh.png"));
@@ -37,6 +45,10 @@ public class Enemy_animation extends ImageView
 		this.true_game_y = INIT_GAME_Y;
 	}
 	
+	/**
+	* Sets type of enemy based on array appearance number 
+	*@param Takes in int value either 7 or 8
+	*/
 	public void set_appearance(int array_appearance) 
 	{
 		switch (array_appearance) 
@@ -50,6 +62,10 @@ public class Enemy_animation extends ImageView
 		}
 	}
 	
+	/**
+	* About: Sets intital layout x and y on GUI version
+	*@param Takes pane on which gui game takes place to add enemy sprite
+	*/
 	public void initial_placement(Pane pane) 
 	{
 		setLayoutY(INIT_GAME_Y);
@@ -58,17 +74,19 @@ public class Enemy_animation extends ImageView
 	}
 	/**
 	 * Method for when the enemy makes it to the end of the map
-	 * @param pane
-	 * @param player
-	 * @param render
+	 * @param pane Pane from which to remove image on enemy animation 
+	 * @param player Play to check if GPA(health) is still valid
+	 * @param render Render updates map with players new GPA  
 	 */
 	
 	public void remove_enemy_end(Pane pane, Player player, Render render) 
 	{
 		pane.getChildren().remove(this);
+		//if gpa is not zero take health off when enemies reach end of the map 
 		if (player.getGPA() > 0) {
-			player.setGPA(player.getGPA() - 1);
+			player.setGPA(player.getGPA() - .5);
 		}
+		//if enemy gpa is below 0 display game over screen 
 		else {
 			ImageView gameover = new ImageView(new Image("gameover.png"));
 			gameover.setTranslateX(-100);
@@ -88,9 +106,9 @@ public class Enemy_animation extends ImageView
 	}
 	/**
 	 * Method for when the enemy is killed by a tower
-	 * @param pane
-	 * @param player
-	 * @param render
+	 * @param pane remove image of enemy from map
+	 * @param player player gains tuition (Score) after killing enemy 
+	 * @param render Render updates scored based on players tuition 
 	 */
 	public void remove_enemy_death(Pane pane, Player player, Render render) {
 		pane.getChildren().remove(this);
@@ -102,8 +120,8 @@ public class Enemy_animation extends ImageView
 	}
 	/**
 	 * Records and prints death location
-	 * @param array_x
-	 * @param array_y
+	 * @param array_x int x where enemy died on array map
+	 * @param array_y int y where enemy died on array map 
 	 */
 	public void record_death(int array_x, int array_y) 
 	{
@@ -111,6 +129,7 @@ public class Enemy_animation extends ImageView
 		this.last_y = 64*array_y;
 		System.out.println("Death x is: " + array_x + ", " + last_x);
 	}
+	
 	
 	public int get_death_x() 
 	{
