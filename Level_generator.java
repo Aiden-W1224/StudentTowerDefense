@@ -13,6 +13,9 @@ public class Level_generator
 	private final int LEVEL_TOTAL = 3;
 	private int delay;
 	
+	/**
+	* Returns arrayList of all towers presently on the map 
+	*/
 	public ArrayList<Tower> get_arsenal()
 	{
 		return this.arsenal;
