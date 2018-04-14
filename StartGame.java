@@ -16,6 +16,12 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+/**
+ * @author:  Athena Bolyos, Jacob Hazen, Daniel Orduz, and Aiden Wong.
+ * About program:  StartGame is largely responsible for the scene in which gameplay takes place. It includes
+ * 		 code for tower placement and starting levels.
+ */
+
 public class StartGame extends Application {
 	
 	private Render render = new Render();
@@ -27,8 +33,11 @@ public class StartGame extends Application {
 	private boolean random_map = false;
 	private Random_map_generator map_generator = new Random_map_generator();
 	
-	//Tower towers = new Tower();
-	
+	/**
+	 * About map_select(boolean random_map):  sets the boolean random_map to either true or false. If the 
+	 * 		player wants to play the game with a randomly-generated map, then the boolean is set to true.
+	 * @param random_map
+	 */
 	public void map_select(boolean random_map) 
 	{
 		this.random_map = random_map;
@@ -38,6 +47,7 @@ public class StartGame extends Application {
 	public void start(Stage primaryStage) throws Exception {
 	
 		Pane pane = new Pane();
+		// If the boolean random_map was set to true, then a random map is generated.
 		if (random_map == true) 
 		{
 			int valid_test = map_generator.test_map();
@@ -90,14 +100,13 @@ public class StartGame extends Application {
 					int x = (int) xDouble;
 					int y = (int) yDouble;
 					
-					if (x <= 17) {
+					if (x <= 16) {
 						if (render.get_map()[(int)y][(int)x] == 0) 
 						{
 							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 8, render, player));
 							render.update_map(player);
 						}
 					}
-					
 				}
 
 			
@@ -106,7 +115,7 @@ public class StartGame extends Application {
 		
 		pane.getChildren().add(tower1);
 		
-		ImageView tower2 = new ImageView(new Image("Grad Student.png"));
+		ImageView tower2 = new ImageView(new Image("art.png"));
 		tower2.setTranslateX(1120);
 		tower2.setTranslateY(150);
 		tower2.setOnMouseClicked( e -> 
@@ -119,14 +128,13 @@ public class StartGame extends Application {
 					
 					double x =  event.getSceneX()/64;
 					double y =  event.getSceneY()/64;
-					if (x <= 17) {
+					if (x <= 16) {
 						if (render.get_map()[(int)y][(int)x] == 0) {
 							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 7, render, player));
 							render.update_map(player);
 							
 						}
 					}
-					
 				}
 
 			
@@ -142,23 +150,18 @@ public class StartGame extends Application {
 		
 		Button test = new Button("Test");
 		test.setOnAction(e-> {
+//			Projectile p = new Projectile();
+//			pane.getChildren().add(p.getI());
+//			p.move(gen.get_arsenal().get(0), render);
 		});
 		MediaPlayer musicplayer;
 		Media mp3music = new Media(getClass().getResource("Music.mp3").toURI().toString());
 		musicplayer= new MediaPlayer(mp3music);
 		musicplayer.setAutoPlay(true);
-		musicplayer.setVolume(1.0);
-		//Loop song forever
-		musicplayer.setOnEndOfMedia(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				musicplayer.seek(Duration.ZERO);
-			}
-		});
+		musicplayer.setVolume(0);
 		test.setTranslateX(30);
 		test.setTranslateY(550);
-		//vb.getChildren().add(test);
+		vb.getChildren().add(test);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

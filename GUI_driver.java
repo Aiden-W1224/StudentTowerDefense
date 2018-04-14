@@ -23,11 +23,8 @@ import javafx.stage.Stage;
 /**
  * 
  * @author PICKLE RICK
- *About Program : This class contains the initial start of the game, this class
- *				  acts like the manager of the game.
- *				  
- *				  
- *
+ * About Program : This is the main driver of the entire game, and is the class that should be initially run 
+ *		by the user.
  */
 public class GUI_driver extends Application
 {
@@ -40,10 +37,14 @@ public class GUI_driver extends Application
 	private Image image = new Image("Testmap.png");
 	public static Circle ball;
 
+	/**
+	 * About newButton(String text, int posx, int posy):  a method for making a button.
+	 * @param text:  Text to include on the button.
+	 * @param posx:  Translation in the x dimension relative to the Parent.
+	 * @param posy:  Translation in the y dimension relative to the Parent.
+	 * @return:  Returns the button.
+	 */
 	public static Button newButton(String text, int posx, int posy) {
-		/*
-		 * Creates new button. Takes text for button, x position and y position as arguments.
-		 */
 		Button button = new Button();
 		button.setText(text);
 		button.setTranslateX(posx);
@@ -67,8 +68,7 @@ public class GUI_driver extends Application
 		        map.setImage(image);
 		        Group root = new Group();
 		        Scene scene = new Scene(root, 1200, 800); 
-		        //scene.getStylesheets().addAll(this.getClass().getResource("bg.css").toExternalForm());
-		       //Create main menu button 
+		        //Create main menu button 
 		        Button menuButton = newButton("Main Menu", 0, 550);
 		        menuButton.setOnAction(e -> primaryStage.setScene(scene));
 		        menuButton.setTranslateY(50);
@@ -90,7 +90,6 @@ public class GUI_driver extends Application
 		        //Code for Text + Images
 		        GraphicsContext gc = canvas.getGraphicsContext2D();
 		       
-		        
 		        Image background = new Image("backgroung.jpg");
 		        gc.drawImage(background, 0, 0);
 		        
@@ -101,17 +100,7 @@ public class GUI_driver extends Application
 		        gc.setFont(titleFont);
 		        gc.fillText("University\n  GPA\n Defence", 500, 200);
 		        gc.strokeText("University\n  GPA\n Defence", 500, 200);
-		        //Image obtained from http://www.freestockphotos.biz/stockphoto/3469
-		        //Image student = new Image("Student2.png");
-		        //gc.drawImage(student, 100,400 );
-		        
-		        //Image obtained from https://www.kisspng.com/png-mathematician-mathematics-stock-photography-clip-a-70743/
-		        //Image teacher = new Image("Teacher.png");
-		        //gc.drawImage(teacher, 800, 350);
-		        
-		        //Create menu button for info screen 
 
-		        
 		        //Create info button for main menu screen
 		        Button infoButton = newButton("Game Info", 600, 580);
 		        root.getChildren().add(infoButton);
