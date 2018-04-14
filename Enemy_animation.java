@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.PathTransition;
@@ -18,7 +19,7 @@ import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 /**
-* About class: Class keeps track of enemy movement and appearance and records death locations withing the array game 
+* About class: Class keeps track of enemy movement and appearance and records death locations within the array game 
 * and reflects the changes within the GUI game.
 */
 
@@ -86,10 +87,10 @@ public class Enemy_animation extends ImageView
 		switch (array_appearance) 
 		{
 		case 4:
-			setImage(new Image("art.png"));
+			setImage(new Image("Dohataru.png"));
 			break;
 		case 5:
-			setImage(new Image("Dohataru.png"));
+			setImage(new Image("TA.gif"));
 			break;
 		}
 	}

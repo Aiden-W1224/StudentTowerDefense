@@ -90,25 +90,13 @@ public class StartGame extends Application {
 					int x = (int) xDouble;
 					int y = (int) yDouble;
 					
-					if (x <= 16) {
+					if (x <= 17) {
 						if (render.get_map()[(int)y][(int)x] == 0) 
 						{
 							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 8, render, player));
 							render.update_map(player);
 						}
 					}
-				
-//					for (TileType T : render.getTiles()) {
-//						
-//						//double x =  event.getSceneX()/64;
-//						//double y =  event.getSceneY()/64;
-//						if (((int)x == T.getXcoord() && (int)y == T.getYcoord()) && (T.getTileType() == "grass")) {
-//							
-//							render.set_map(tower_place.place_towers(render.get_map(), gen, T.getXcoord(), T.getYcoord(), 8));
-//							render.update_map(player);
-//							T.setTileType("tower");
-//						}
-//					}
 					
 				}
 
@@ -118,7 +106,7 @@ public class StartGame extends Application {
 		
 		pane.getChildren().add(tower1);
 		
-		ImageView tower2 = new ImageView(new Image("art.png"));
+		ImageView tower2 = new ImageView(new Image("Grad Student.png"));
 		tower2.setTranslateX(1120);
 		tower2.setTranslateY(150);
 		tower2.setOnMouseClicked( e -> 
@@ -131,24 +119,13 @@ public class StartGame extends Application {
 					
 					double x =  event.getSceneX()/64;
 					double y =  event.getSceneY()/64;
-					if (x <= 16) {
+					if (x <= 17) {
 						if (render.get_map()[(int)y][(int)x] == 0) {
 							render.set_map(tower_place.place_towers(render.get_map(), gen, (int)x, (int)y, 7, render, player));
 							render.update_map(player);
 							
 						}
 					}
-					
-					//This is the old code for checking tower placement i'll delete it when i'm sure i dont need it 
-//					for (TileType T : render.getTiles()) {
-//						double x =  event.getSceneX()/64;
-//						double y =  event.getSceneY()/64;
-//						if (((int)x == T.getXcoord() && (int)y == T.getYcoord()) && (T.getTileType() == "grass")) {
-//							System.out.println("grass???");
-//							render.set_map(tower_place.place_towers(render.get_map(), gen, T.getXcoord(), T.getYcoord(), 7));
-//							render.update_map(player);
-//						}
-//					}
 					
 				}
 
@@ -165,9 +142,6 @@ public class StartGame extends Application {
 		
 		Button test = new Button("Test");
 		test.setOnAction(e-> {
-//			Projectile p = new Projectile();
-//			pane.getChildren().add(p.getI());
-//			p.move(gen.get_arsenal().get(0), render);
 		});
 		MediaPlayer musicplayer;
 		Media mp3music = new Media(getClass().getResource("Music.mp3").toURI().toString());
@@ -176,7 +150,7 @@ public class StartGame extends Application {
 		musicplayer.setVolume(1.0);
 		test.setTranslateX(30);
 		test.setTranslateY(550);
-		vb.getChildren().add(test);
+		//vb.getChildren().add(test);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
