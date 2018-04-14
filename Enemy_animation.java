@@ -91,10 +91,10 @@ public class Enemy_animation extends ImageView
 		switch (array_appearance) 
 		{
 		case 4:
-			setImage(new Image("art.png"));
+			setImage(new Image("Dohataru.png"));
 			break;
 		case 5:
-			setImage(new Image("Dohataru.png"));
+			setImage(new Image("TA.gif"));
 			break;
 		}
 	}
