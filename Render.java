@@ -66,7 +66,7 @@ public class Render
 	private final Image PATH_IMAGE = new Image("dirt.png");
 	private final Image TA_IMAGE = new Image("raoh.png");
 	private final Image RESEARCHER_IMAGE = new Image("art.png");
-	private final Image FIRST_YEAR_IMAGE = new Image("art.png");
+	private final Image FIRST_YEAR_IMAGE = new Image("Grad Student.png");
 	private final Image SECOND_YEAR_IMAGE = new Image("Student.png");
 	
 	
