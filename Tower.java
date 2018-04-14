@@ -46,7 +46,9 @@ public abstract class Tower
 		p.draw(this.pane, this.enemy);
 	}
 	
-	
+	/*
+	* sets an updates the different enemies as the move through paths
+	*/
 	public void update(Pane pane, ArrayList<Enemy> enemies) {
 		this.pane = pane;
 		this.enemy = this.target(enemies);
@@ -93,9 +95,16 @@ public abstract class Tower
 	{
 		return this.y_coord;
 	}
+	
+	/*
+	*multiplies array x by 64.0 to get position on the screen
+	*/
 	public double getScreenX() {
 		return this.x_coord*64.0;
 	}
+	/*
+	*multiplies array y by 64.0 to get position on the screen
+	*/
 	public double getScreenY() {
 		return this.get_y()*64.0;
 	}
@@ -209,26 +218,40 @@ public abstract class Tower
 		}
 	}
 	
+	/*
+	*Sets radius to the right of the gui tower
+	*/
 	public double getGUIBoundsRight(int radius) {
 		double xBoundsRight = this.get_x()*64.0 + radius*64;;
 		return xBoundsRight;
 	}
 	
+	/*
+	*Sets radius to the left of the gui tower
+	*/
 	public double getGUIBoundsLeft(int radius) {
 		double xBoundsLeft = this.get_x()*64.0 - radius*64;
 		return xBoundsLeft;
 	}
 	
+	/*
+	*Sets radius below the gui tower
+	*/
 	public double getGUIBoundsBelow(int radius) {
 		double yBoundsBelow = this.get_y()*64.0 + radius*64;
 		return yBoundsBelow;
 	}
-	
+	/*
+	*Sets radius above the gui tower
+	*/
 	public double getGUIBoundsAbove(int radius) {
 		double yBoundsAbove = this.get_y()*64.0 - radius*64;
 		return yBoundsAbove;
 	}
 	
+	/*
+	*Detects if enemy is within towers radius 
+	*/
 	public boolean GUIDetect(Enemy enemy) {
 		if(enemy.get_doll().getLayoutX() <= this.getGUIBoundsRight(2) && enemy.get_doll().getLayoutX() > this.getGUIBoundsLeft(2) && 
 				enemy.get_doll().getLayoutY() > this.getGUIBoundsAbove(2) && enemy.get_doll().getLayoutY() < this.getGUIBoundsBelow(2)) {
