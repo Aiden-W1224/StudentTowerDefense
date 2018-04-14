@@ -27,6 +27,7 @@ public class Projectile extends ImageView {
 	private ImageView test = new ImageView(new Image("kenshiro.jpeg"));
 	private Circle projectile = new Circle(3, Color.BLACK);
 	
+	//Constructor not used 
 	public Projectile(double x, double y, double speed, int damage, Pane pane) {
 		this.x = x;
 		this.y = y;
@@ -37,27 +38,33 @@ public class Projectile extends ImageView {
 	
 	/**
 	* Sets projectile x,y at towers x and y 
+	*@param double x, x position of the tower on the screen 
+	*@param double y, y position of the tower on the screen 
 	*/
 	public Projectile(double x, double y) {
 		this.x = x;
 		this.y = y;
 		// TODO Auto-generated constructor stub
 	}
-
+	
+	//not used
 	public int getDamage() {
 		return damage;
 	}
+	//not used
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
-	
+	// not used
 	public double getSpeed() {
 		return speed;
 	}
+	//not used
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
 	
+	//not used
 	public void update(Pane pane) {
 		x += 0.1*speed;
 		//draw(pane);
