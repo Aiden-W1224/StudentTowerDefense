@@ -78,6 +78,10 @@ public class SceneSelect {
 		
 	}
 	
+	/**
+	*About: Sets scene to map select scene
+	*@param Button takes type button which should be the menu button to bring you back to home screen after you click it 
+	*/
 	public Scene MapSelect(Button menuButton)
 	{
 		FlowPane flow = new FlowPane();
