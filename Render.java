@@ -66,11 +66,9 @@ public class Render
 	private final Image PATH_IMAGE = new Image("dirt.png");
 	private final Image TA_IMAGE = new Image("raoh.png");
 	private final Image RESEARCHER_IMAGE = new Image("art.png");
-	private final Image FIRST_YEAR_IMAGE = new Image("Grad Student.png");
+	private final Image FIRST_YEAR_IMAGE = new Image("art.png");
 	private final Image SECOND_YEAR_IMAGE = new Image("Student.png");
-	private ArrayList<TileType> tiles = new ArrayList<TileType>();
 	
-	public ArrayList<TileType> getTiles() { return this.tiles; }
 	
 	public boolean rand() 
 	{
@@ -167,27 +165,22 @@ public class Render
 				{
 				case GRASS:
 					this.gc.drawImage(GRASS_IMAGE, j*64, i*64);
-					tiles.add(new TileType("grass", j, i));
 					break;
 					
 				case PATH:
 					this.gc.drawImage(PATH_IMAGE, j*64, i*64);
-					tiles.add(new TileType("path", j, i));
 					break;
 					
 				case CROSS_ROADS:
 					this.gc.drawImage(PATH_IMAGE, j*64, i*64);
-					tiles.add(new TileType("path", j, i));
 					break;
 					
 				case TA:
 					this.gc.drawImage(TA_IMAGE, j*64, i*64);
-					tiles.add(new TileType("TA", j, i));
 					break;
 					
 				case RESEARCHER:
 					this.gc.drawImage(RESEARCHER_IMAGE, j*64, i*64);
-					tiles.add(new TileType("RESEARCHER"));
 					break;
 					
 				case FIRST_YEAR:
@@ -200,7 +193,6 @@ public class Render
 					
 				case SCORE_AREA:
 					this.gc.drawImage(GRASS_IMAGE, j*64, i*64);
-					tiles.add(new TileType("grass", j, i));
 					Font titleFont = Font.font("arial", FontWeight.EXTRA_BOLD, 25);
 			        this.gc.setFont(titleFont);
 					String text = "GPA: " + player.getGPA();
@@ -209,7 +201,6 @@ public class Render
 					break;
 				case TUITION_AREA:
 					this.gc.drawImage(GRASS_IMAGE, j*64, i*64);
-					tiles.add(new TileType("grass", j, i));
 					Font title = Font.font("arial", FontWeight.EXTRA_BOLD, 25);
 			        this.gc.setFont(title);
 					String Tuition = "Tuition: " + (player.getTuition());
