@@ -115,7 +115,7 @@ public class StartGame extends Application {
 		
 		pane.getChildren().add(tower1);
 		
-		ImageView tower2 = new ImageView(new Image("art.png"));
+		ImageView tower2 = new ImageView(new Image("Grad Student.png"));
 		tower2.setTranslateX(1120);
 		tower2.setTranslateY(150);
 		tower2.setOnMouseClicked( e -> 
@@ -158,7 +158,15 @@ public class StartGame extends Application {
 		Media mp3music = new Media(getClass().getResource("Music.mp3").toURI().toString());
 		musicplayer= new MediaPlayer(mp3music);
 		musicplayer.setAutoPlay(true);
-		musicplayer.setVolume(0);
+		musicplayer.setVolume(1.0); 
+		//Loop song forever
+		musicplayer.setOnEndOfMedia(new Runnable() {
+  			@Override
+  			public void run() {
+  			// TODO Auto-generated method stub
+  			musicplayer.seek(Duration.ZERO);
+  		}
+	  });
 		test.setTranslateX(30);
 		test.setTranslateY(550);
 		vb.getChildren().add(test);
