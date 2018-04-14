@@ -15,7 +15,7 @@ import javafx.stage.Stage;
  * 
  *@author PICKLE RICK
  *About Program : This class contains the 2D array path, and also updates the GUI according to the
- 		  different Integers in the array list.
+ *	  different Integers in the array list.
  *				  
  *
  */
@@ -66,10 +66,9 @@ public class Render
 	private final Image PATH_IMAGE = new Image("dirt.png");
 	private final Image TA_IMAGE = new Image("raoh.png");
 	private final Image RESEARCHER_IMAGE = new Image("art.png");
-	private final Image FIRST_YEAR_IMAGE = new Image("Grad Student.png");
+	private final Image FIRST_YEAR_IMAGE = new Image("art.png");
 	private final Image SECOND_YEAR_IMAGE = new Image("Student.png");
 	private ArrayList<TileType> tiles = new ArrayList<TileType>();
-	//public Object type = null;
 	
 	public ArrayList<TileType> getTiles() { return this.tiles; }
 	
@@ -100,6 +99,13 @@ public class Render
 		return this.map;
 	}
 	
+	/**
+	 * About set_map(int[][] map, Random_map_generator generator):  this constructor is used in the case that
+	 * 		the player decided to play the game on a randomly generated map. An appropriate area is chosen
+	 * 		to display the player's GPA and tuition, and starting/ending coordinates are set apprpriately.
+	 * @param map:  the text-based version of the map to be used for the game.
+	 * @param generator:  the map generator that has information about the text-based map.
+	 */
 	public void set_map(int[][] map, Random_map_generator generator) 
 	{
 		this.start_edge_coord_x = generator.get_start_x();
@@ -108,8 +114,33 @@ public class Render
 		this.end_edge_coord_y = generator.get_end_y();
 		this.random_map = true;
 		this.map = map;
+		if ((map[1][2] == 0) && (map[2][2] == 0)) 
+		{
+			map[1][2] = SCORE_AREA;
+			map[2][2] = TUITION_AREA;
+		}
+		else if ((map[1][14] == 0) && (map[2][14] == 0)) 
+		{
+			map[1][14] = SCORE_AREA;
+			map[2][14] = TUITION_AREA;
+		}
+		else if ((map[10][2] == 0) && (map[11][2] == 0)) 
+		{
+			map[10][2] = SCORE_AREA;
+			map[11][2] = TUITION_AREA;
+		}
+		else if ((map[10][14] == 0) && (map[11][14] == 0)) 
+		{
+			map[10][14] = SCORE_AREA;
+			map[11][14] = TUITION_AREA;
+		}
 	}
 	
+	/**
+	 * About set_map(int[][] map):  this constructor is used for updates to the map including tower building.
+	 * 		This method is used for both the default game map and any randomly-generated map.
+	 * @param map:  the text-based version of the map used for the game.
+	 */
 	public void set_map(int[][] map) 
 	{
 		this.map = map;
@@ -189,16 +220,5 @@ public class Render
 				}
 			}
 		}
-		
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

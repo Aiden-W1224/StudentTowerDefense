@@ -1,3 +1,7 @@
+/**
+ * @author:  Athena Bolyos, Jacob Hazen, Daniel Orduz, and Aiden Wong.
+ * About program:  Second_year is a subclass of Tower.
+ */
 
 public class Second_year extends Tower
 {

@@ -19,7 +19,8 @@ import javafx.scene.shape.Path;
 import javafx.util.Duration;
 
 /**
-* About class: Class keeps track of enemy movement and appearance and records death locations within the array game 
+* @author Athena Bolyos, Jacob Hazen, Daniel Orduz, Aiden Wong.
+* About class: Class keeps track of enemy movement and appearance and records death locations withing the array game 
 * and reflects the changes within the GUI game.
 */
 
@@ -40,11 +41,13 @@ public class Enemy_animation extends ImageView
 	private int last_y;
 	
 	/**
-	* About: Constructor sets intial game x and y at starting location
+	* About Enemy_animation(Render render):  a constructor that accepts a parameter render that allows the instance
+	* 		of Enemy_animation to store information about important parts of the map. INIT_GAME_X and INIT_GAME_Y
+	* 		 are set to default values based on the default map of the game. If the user selects a randomized
+	* 		 map, then INIT_GAME_X and INIT_GAME_Y are set accordingly.
 	*/
 	public Enemy_animation(Render render) 
 	{
-		//setImage(new Image("res/raoh.png"));
 		this.render = render;
 		if (render.rand() == false) 
 		{
@@ -79,25 +82,27 @@ public class Enemy_animation extends ImageView
 	}
 	
 	/**
-	* Sets type of enemy based on array appearance number 
-	*@param Takes in int value either 7 or 8
+	* About set_appearance(int array_appearance):  determines the appearance of the Enemy_animation based on 
+	* 		its associated text-based version's appearance.
+	* @param array_appearance:  the integer used to represent the enemy in the text-based version of the game.
 	*/
 	public void set_appearance(int array_appearance) 
 	{
 		switch (array_appearance) 
 		{
 		case 4:
-			setImage(new Image("Dohataru.png"));
+			setImage(new Image("art.png"));
 			break;
 		case 5:
-			setImage(new Image("TA.gif"));
+			setImage(new Image("Dohataru.png"));
 			break;
 		}
 	}
 	
 	/**
-	* About: Sets intital layout x and y on GUI version
-	*@param Takes pane on which gui game takes place to add enemy sprite
+	* About initial_placement(Pane pane):  places the Enemy_animation onto the GUI version of the map based on
+	* 		its initial values of INIT_GAME_Y and INIT_GAME_X.
+	* @param pane:  the Pane onto which the Enemy_animation is placed.
 	*/
 	public void initial_placement(Pane pane) 
 	{
@@ -105,13 +110,14 @@ public class Enemy_animation extends ImageView
 		setLayoutX(INIT_GAME_X);
 		pane.getChildren().add(this);
 	}
-	/**
-	 * Method for when the enemy makes it to the end of the map
-	 * @param pane Pane from which to remove image on enemy animation 
-	 * @param player Play to check if GPA(health) is still valid
-	 * @param render Render updates map with players new GPA  
-	 */
 	
+	/**
+	 * About remove_enemy_end(Pane pane, Player player, Render render):  used to remove the Enemy_animation from
+	 * 		the GUI version of the map in the case where the enemy reaches the end of the map.
+	 * @param pane:  Pane from which to remove image on enemy animation 
+	 * @param player:  Play to check if GPA(health) is still valid
+	 * @param render:  Render updates map with players new GPA  
+	 */
 	public void remove_enemy_end(Pane pane, Player player, Render render) 
 	{
 		pane.getChildren().remove(this);
@@ -137,22 +143,23 @@ public class Enemy_animation extends ImageView
 		render.update_map(player);
 		System.out.println("GPA: " + player.getGPA());
 	}
+	
 	/**
-	 * Method for when the enemy is killed by a tower
-	 * @param pane remove image of enemy from map
-	 * @param player player gains tuition (Score) after killing enemy 
-	 * @param render Render updates scored based on players tuition 
+	 * About remove_enemy_death(Pane pane, Player player, Render render):  used to remove an Enemy_animation
+	 * 		from the GUI version of the map in the case where the enemy was killed by a tower.
+	 * @param pane:  the Pane from which to remove the Enemy_animation.
+	 * @param player:  player gains tuition (Score) after killing enemy 
+	 * @param render:  Render updates scored based on players tuition 
 	 */
 	public void remove_enemy_death(Pane pane, Player player, Render render) {
 		pane.getChildren().remove(this);
 		player.setTuition(player.getTuition() + 100);
 		render.update_map(player);
-		
-		
-		
 	}
+	
 	/**
-	 * Records and prints death location
+	 * About record_death(int array_x, int array_y):  records the location at which the text-based enemy died on the
+	 * 		map. This information is used by Enemy_animation to reflect this information in the GUI afterwards.
 	 * @param array_x int x where enemy died on array map
 	 * @param array_y int y where enemy died on array map 
 	 */
@@ -163,12 +170,17 @@ public class Enemy_animation extends ImageView
 		System.out.println("Death x is: " + array_x + ", " + last_x);
 	}
 	
-	
+	/**
+	 * About get_death_x():  returns the x co-ordinate at which the text-based enemy died.
+	 */
 	public int get_death_x() 
 	{
 		return this.last_x;
 	}
 	
+	/**
+	 * About get_death_y():  returns the y co-ordinate at which the text-based enemy died.
+	 */
 	public int get_death_y() 
 	{
 		return this.last_y;

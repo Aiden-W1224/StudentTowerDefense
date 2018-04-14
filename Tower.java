@@ -5,6 +5,11 @@ import java.util.TimerTask;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+/**
+ * @author:  Athena Bolyos, Jacob Hazen, Daniel Orduz, and Aiden Wong.
+ * About program:  the parent class for all Towers. The program includes code for detecting enemies within
+ * 		its range in both text and GUI versions.
+ */
 
 public abstract class Tower 
 {
@@ -32,25 +37,20 @@ public abstract class Tower
 	};
 	
 	public ArrayList<Projectile> getProjectiles(){return this.projectiles;}
+	
+	/**
+	 * About shoot():  draws a projectile onto the screen, and illustrates the towers shooting.
+	 */
 	public void shoot() {
-		//timeSinceLastShot = 0;
-		//Projectile p = new 
 		Projectile p = new Projectile(this.getScreenX(), this.getScreenY());
-		//p.getTranslateX()
-		//pane.getChildren().add(p);
-		//gen.get_wave_02().get(0)
 		p.draw(this.pane, this.enemy);
-		//projectiles.add(p);
-		//pane.getChildren().add(new Projectile(x_coord + 32.0, y_coord + 32.0, 5.0, 10));
 	}
 	
 	
 	public void update(Pane pane, ArrayList<Enemy> enemies) {
-		//System.out.println("Shot fired: " + this.get_shots_fired());
 		this.pane = pane;
 		this.enemy = this.target(enemies);
 		shoot();
-		//timer.scheduleAtFixedRate(shooting, (long)100, (long)300);
 		
 	}
 	
@@ -82,55 +82,47 @@ public abstract class Tower
 		
 	}
 	
+	/**
+	 * Getters and setters:
+	 */
 	public int get_x() 
 	{
 		return this.x_coord;
 	}
-	
 	public int get_y() 
 	{
 		return this.y_coord;
 	}
-	
 	public double getScreenX() {
 		return this.x_coord*64.0;
-		
 	}
-	
 	public double getScreenY() {
 		return this.get_y()*64.0;
 	}
-	
 	public void set_damage(int damage) 
 	{
 		this.damage = damage;
 	}
-	
 	public int get_damage() 
 	{
 		return this.damage;
 	}
-	
 	public void set_shooting_rate(int rate) 
 	{
 		this.shooting_rate = rate;
 	}
-	
 	public float get_shooting_rate() 
 	{
 		return this.shooting_rate;
 	}
-	
 	public void set_shots_fired() 
 	{
 		this.shots_fired += 1;
 	}
-	
 	public void reset_shots_fired() 
 	{
 		this.shots_fired = 0;
 	}
-	
 	public int get_shots_fired() 
 	{
 		return this.shots_fired;
@@ -144,17 +136,18 @@ public abstract class Tower
 	{
 		this.radius = rad;
 	}
-	
 	public int get_radius() 
 	{
 		return this.radius;
 	}
-	
 	public ArrayList<int[]> get_bounds()
 	{
 		return bounds;
 	}
 	
+	/**
+	 * Default constructor for use by subclasses.
+	 */
 	public Tower() 
 	{
 
@@ -171,7 +164,6 @@ public abstract class Tower
 	{
 		this.appearance = app;
 	}
-	
 	public int get_appearance() 
 	{
 		return this.appearance;
@@ -250,6 +242,9 @@ public abstract class Tower
 		}
 	}
 	
+	/**
+	 * About toString():  returns information about a specific tower in the form of a string.
+	 */
 	public String toString() 
 	{
 		return ("(" + x_coord + ", " + y_coord + ")");

@@ -1,3 +1,7 @@
+/**
+ * @author:  Athena Bolyos, Jacob Hazen, Daniel Orduz, and Aiden Wong.
+ * About program:  Researcher is a subclass of Enemy. 
+ */
 
 public class Researcher extends Enemy
 {

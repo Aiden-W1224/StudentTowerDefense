@@ -2,14 +2,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * @author:  Athena Bolyos, Jacob Hazen, Daniel Orduz, Aiden Wong.
+ * About program:  Random_map_generator creates simple int[][] arrays that can be used in the game.
+ * 		After a map is generated, the method test_map() iterates an integer through the array in
+ * 		a manner similar to that in which an enemy might move through. If the integer encounters
+ * 		a cross-roads, then any program which uses Random_map_generator will iterate through a while 
+ * 		loop until a viable map with only one path is generated. Paths generated do not begin or end
+ * 		in corners, and only the very beginning and very end of the path generated ever touch the
+ * 		edge of the int[][] array.
+ */
+
 public class Random_map_generator 
 {
 	private final int X_DIM = 17;
 	private final int Y_DIM = 12;
 	int[][] map = new int[Y_DIM][X_DIM];
-	private final int SCORE_AREA = 11;
 	private int start_edge;
-	private int end_edge;
+	//private int end_edge;
 	Random rand = new Random();
 	
 	private final int VALID_BUILD = 0;
@@ -55,6 +65,9 @@ public class Random_map_generator
 	
 	ArrayList<int[]> in_bounds = new ArrayList<int[]>();
 	
+	/**
+	 * The following getters are used to record information about the map in Render: 
+	 */
 	public int get_start_x() 
 	{
 		return this.start_edge_coord_x;
@@ -72,6 +85,10 @@ public class Random_map_generator
 		return this.end_edge_coord_y;
 	}
 	
+	/**
+	 * About clear_booleans():  used in test_map() to iterate through the map. The booleans are cleared each time
+	 * 		the while loop in test_map() begins again.
+	 */
 	public void clear_booleans() 
 	{
 		north = false;
@@ -80,6 +97,12 @@ public class Random_map_generator
 		west = false;
 	}
 	
+	/**
+	 * About get_map():  iterates through the map, and if there's any value that is not a grass or path tile 
+	 * 		value, then the value is changed appropriately. Once the map is cleaned up, it is returned to 
+	 * 		the location from which the method was called.
+	 * @return:  returns a text-based version of the game map.
+	 */
 	public int[][] get_map()
 	{
 		for (int i = 0; i < map.length; i++) 
@@ -99,6 +122,15 @@ public class Random_map_generator
 		return this.map;
 	}
 	
+	/**
+	 * About test_map():  simulates the movement of an enemy through the map. If the enemy runs into a cross-roads,
+	 * 		then the while loop in test_map() stops and an integer that reflects the value of the cross-roads
+	 * 		is returned to the location from which the method was called. From that location, if the 
+	 * 		integer returned is greater than one, then Random_map_generator() is called again, and a different
+	 * 		map is generated.
+	 * @return:  returns an integer that reflects the possible number of paths at the tile where the while loop
+	 * 		stopped.
+	 */
 	public int test_map() 
 	{
 		int enemy = 5;
@@ -180,6 +212,12 @@ public class Random_map_generator
 		return this.path_index;
 	}
 	
+	/**
+	 * About set_bounds():  this method is used to determine what possible tiles could be used to build
+	 * 		the next step in a given path. Once these tiles are determined, their values are checked, and 
+	 * 		set to a value BUFFERED if they're valid tiles. If the tile is buffered, then the path may later
+	 * 		build on that tile.
+	 */
 	public void set_bounds() 
 	{
 		in_bounds.clear();
@@ -214,9 +252,13 @@ public class Random_map_generator
 				map[wai][ecks] = BUFFERED;
 			}
 		}
-		//System.out.println();
 	}
 	
+	/**
+	 * About void_bounds():  this method goes through any bounds not used in the most recent path build.
+	 * 		If the tile was not used, then it is set to a value INVALID_BUILD. This prevents 
+	 * 		cross-roads from forming, and makes maps more varied overall.
+	 */
 	public void void_bounds() 
 	{
 		for (int[] foo : in_bounds) 
@@ -228,16 +270,15 @@ public class Random_map_generator
 		}
 	}
 	
+	/**
+	 * About Random_map_generator():  This constructor creates a map which may not necessarily be used 
+	 * 		(e.g. if the user decides to use the default map instead). Randomized elements include
+	 * 		random starting edge, random number of turns used, and a random end edge determined by
+	 * 		the starting edge and what half of the int[][] array the current end of the path exists in.
+	 */
 	public Random_map_generator() 
 	{
-		//this.map[1][14] = SCORE_AREA;
-		/**System.out.println("Empty map: ");
-		for (int i = 0; i < map.length; i++) 
-		{
-			System.out.println(Arrays.toString(map[i]));
-		}
-		System.out.println("---------------------------------------------------");
-		System.out.println();*/
+		// Determine start edge
 		start_edge = rand.nextInt(4) + 1;
 		switch (start_edge) 
 		{
@@ -255,12 +296,6 @@ public class Random_map_generator
 					map[start_edge_coord_y][i] = PATH;
 				}
 			}
-			end_edge = start_edge;
-			while (end_edge == start_edge) 
-			{
-				end_edge = rand.nextInt(4) + 1;
-			}
-			System.out.println("End edge: " + end_edge);
 			break;
 			
 		case 2:
@@ -277,12 +312,6 @@ public class Random_map_generator
 					map[i][start_edge_coord_x] = PATH;
 				}
 			}
-			end_edge = start_edge;
-			while (end_edge == start_edge) 
-			{
-				end_edge = rand.nextInt(4) + 1;
-			}
-			System.out.println("End edge: " + end_edge);
 			break;
 			
 		case 3:
@@ -299,12 +328,6 @@ public class Random_map_generator
 					map[start_edge_coord_y][i] = PATH;
 				}
 			}
-			end_edge = start_edge;
-			while (end_edge == start_edge) 
-			{
-				end_edge = rand.nextInt(4) + 1;
-			}
-			System.out.println("End edge: " + end_edge);
 			break;
 			
 		case 4:
@@ -321,18 +344,13 @@ public class Random_map_generator
 					map[i][start_edge_coord_x] = PATH;
 				}
 			}
-			end_edge = start_edge;
-			while (end_edge == start_edge) 
-			{
-				end_edge = rand.nextInt(4) + 1;
-			}
-			System.out.println("End edge: " + end_edge);
 			break;
 		}
 		current_x = start_edge_coord_x;
 		current_y = start_edge_coord_y;
 		System.out.println("Start of path is at: [" + current_x + ", " + current_y + "]");
 		
+		// Determine number of turns the path takes, and iterate through a for loop
 		int turns = rand.nextInt(5) + 3;
 		for (int i = 0; i < turns; i++) 
 		{
@@ -360,40 +378,39 @@ public class Random_map_generator
 				orisinal_dir = dir;
 			}
 			
-			//onepathponepathponekdasjf;lkajsdl;kfj
-			
 			if (i == 0)
 			{
-			for (int j = 0; j < 3; j++) 
-			{
-				set_bounds();
-				previous_x = current_x;
-				previous_y = current_y;
-				if (dir == DOWN) 
+				for (int j = 0; j < 3; j++) 
 				{
-					map[current_y + 1][current_x] = 1;
-					current_y += 1;
+					set_bounds();
+					previous_x = current_x;
+					previous_y = current_y;
+					if (dir == DOWN) 
+					{
+						map[current_y + 1][current_x] = 1;
+						current_y += 1;
+					}
+					else if (dir == LEFT) 
+					{
+						map[current_y][current_x - 1] = 1;
+						current_x -= 1;
+					}
+					else if (dir == RIGHT) 
+					{
+						map[current_y][current_x + 1] = 1;
+						current_x += 1;
+					}
+					else if (dir == UP) 
+					{
+						map[current_y - 1][current_x] = 1;
+						current_y -=1;
+					}
+					void_bounds();
 				}
-				else if (dir == LEFT) 
-				{
-					map[current_y][current_x - 1] = 1;
-					current_x -= 1;
-				}
-				else if (dir == RIGHT) 
-				{
-					map[current_y][current_x + 1] = 1;
-					current_x += 1;
-				}
-				else if (dir == UP) 
-				{
-					map[current_y - 1][current_x] = 1;
-					current_y -=1;
-				}
-				void_bounds();
 			}
-			}
-			
 			int next_dir = -1;
+			
+			// Determine path length after a turn
 			int steps = rand.nextInt(6) + 3;
 			if (dir == UP) 
 			{
@@ -643,6 +660,8 @@ public class Random_map_generator
 			}
 		}
 		
+		// After the for loops are iterated through, the exit edge is determined based on what half of the 
+		// map the end of the path is currently in, and what the starting edge was.
 		if ((orisinal_dir == UP) || (orisinal_dir == DOWN)) 
 		{
 			if (current_x >= 9) 
@@ -684,102 +703,12 @@ public class Random_map_generator
 		end_edge_coord_x = current_x;
 		end_edge_coord_y = current_y;
 		
-		/**while (reset_count < 20) 
-		{
-			reset_count = 0;
-			in_bounds.clear();
-			if ((current_x - 1) >= 0) 
-			{
-				int[] coords = new int[] {(current_x - 1), current_y};
-				in_bounds.add(coords);
-			}
-			if ((current_x + 1) < X_DIM) 
-			{
-				int[] coords = new int[] {(current_x + 1), current_y};
-				in_bounds.add(coords);
-			}
-			if ((current_y - 1) >= 0) 
-			{
-				int[] coords = new int[] {current_x, (current_y - 1)};
-				in_bounds.add(coords);
-			}
-			if ((current_y + 1) < Y_DIM) 
-			{
-				int[] coords = new int[] {current_x, (current_y + 1)};
-				in_bounds.add(coords);
-			}
-			System.out.println("Bounds looks like: ");
-			for (int j = 0; j < in_bounds.size(); j++) 
-			{
-				System.out.print(Arrays.toString(in_bounds.get(j)) + ", ");
-				int ecks = in_bounds.get(j)[0];
-				int wai = in_bounds.get(j)[1];
-				if (map[wai][ecks] == 0) 
-				{
-					map[wai][ecks] = BUFFERED;
-				}
-			}
-			System.out.println();
-			ahead_tile = INVALID_BUILD;
-			int[] chosen = new int[2];
-			while (ahead_tile != BUFFERED && reset_count < 20) 
-			{
-				int look = rand.nextInt(in_bounds.size()) + 1;
-				chosen = in_bounds.get(look - 1);
-				ahead_tile = map[chosen[1]][chosen[0]];
-				if (start_edge == 1 && chosen[1] < current_y) 
-				{
-					ahead_tile = INVALID_BUILD;
-					System.out.println("Reset!");
-					reset_count += 1;
-				}
-				else if (start_edge == 2 && chosen[0] > current_x) 
-				{
-					ahead_tile = INVALID_BUILD;
-					System.out.println("Reset!");
-					reset_count += 1;
-				}
-				else if (start_edge == 3 && chosen[1] > current_y) 
-				{
-					ahead_tile = INVALID_BUILD;
-					System.out.println("Reset!");
-					reset_count += 1;
-				}
-				else if (start_edge == 4 && chosen[0] < current_x) 
-				{
-					ahead_tile = INVALID_BUILD;
-					System.out.println("Reset!");
-					reset_count += 1;
-				}
-			}
-			if (reset_count < 20)
-			{
-			previous_x = current_x;
-			previous_y = current_y;
-			for (int j = 0; j < in_bounds.size(); j++) 
-			{
-				int ecks = in_bounds.get(j)[0];
-				int wai = in_bounds.get(j)[1];
-				if (map[wai][ecks] == BUFFERED) 
-				{
-					map[wai][ecks] = INVALID_BUILD;
-				}
-			}
-			//System.out.println("Chosen tile: " + Arrays.toString(chosen));
-			map[chosen[1]][chosen[0]] = PATH;
-			current_x = chosen[0];
-			current_y = chosen[1];
-			}
-		}*/
-		
 		System.out.println("Map now: ");
 		for (int j = 0; j < map.length; j++) 
 		{
 			System.out.println(Arrays.toString(map[j]));
 		}
 		System.out.println("---------------------------------------------------");
-		System.out.println();
-		
-		
+		System.out.println();	
 	}
 }

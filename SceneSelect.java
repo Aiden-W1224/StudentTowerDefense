@@ -13,6 +13,11 @@ import javafx.stage.Stage;
 import javafx.scene.layout.FlowPane;
 import javafx.geometry.Pos;
 
+/**
+ * @author:  Athena Bolyos, Jacob Hazen, Daniel Orduz, and Aiden Wong.
+ * About program:  SceneSelect is largely responsible for the information screen of the game.
+ */
+
 public class SceneSelect {
 	
 	private Image map = new Image("TestMap.png");
@@ -58,7 +63,7 @@ public class SceneSelect {
 		
 	    //moving text into center position
 	    text.setTranslateX(-50);
-		text.setTranslateY(-100);
+		text.setTranslateY(-150);
 		welcomeText.setTranslateX(-10);
 		welcomeText.setTranslateY(-400);
 		//infoScene.setFill(Color.ALICEBLUE);

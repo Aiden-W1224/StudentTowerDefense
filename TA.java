@@ -1,3 +1,7 @@
+/**
+ * @author:  Athena Bolyos, Jacob Hazen, Daniel Orduz, and Aiden Wong.
+ * About program:  TA is a subclass of Enemy.
+ */
 
 public class TA extends Enemy
 {
