@@ -108,6 +108,26 @@ public class Render
 		this.end_edge_coord_y = generator.get_end_y();
 		this.random_map = true;
 		this.map = map;
+		if ((map[1][2] == 0) && (map[2][2] == 0)) 
+		{
+			map[1][2] = SCORE_AREA;
+			map[2][2] = TUITION_AREA;
+		}
+		else if ((map[1][14] == 0) && (map[2][14] == 0)) 
+		{
+			map[1][14] = SCORE_AREA;
+			map[2][14] = TUITION_AREA;
+		}
+		else if ((map[10][2] == 0) && (map[11][2] == 0)) 
+		{
+			map[10][2] = SCORE_AREA;
+			map[11][2] = TUITION_AREA;
+		}
+		else if ((map[10][14] == 0) && (map[11][14] == 0)) 
+		{
+			map[10][14] = SCORE_AREA;
+			map[11][14] = TUITION_AREA;
+		}
 	}
 	
 	public void set_map(int[][] map) 
