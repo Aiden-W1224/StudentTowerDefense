@@ -58,7 +58,7 @@ public class SceneSelect {
 		
 	    //moving text into center position
 	    text.setTranslateX(-50);
-		text.setTranslateY(-150);
+		text.setTranslateY(-100);
 		welcomeText.setTranslateX(-10);
 		welcomeText.setTranslateY(-400);
 		//infoScene.setFill(Color.ALICEBLUE);
