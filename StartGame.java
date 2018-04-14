@@ -148,6 +148,14 @@ public class StartGame extends Application {
 		musicplayer= new MediaPlayer(mp3music);
 		musicplayer.setAutoPlay(true);
 		musicplayer.setVolume(1.0);
+		//Loop song forever
+		musicplayer.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				musicplayer.seek(Duration.ZERO);
+			}
+		});
 		test.setTranslateX(30);
 		test.setTranslateY(550);
 		//vb.getChildren().add(test);
