@@ -15,7 +15,8 @@ import javafx.scene.shape.VLineTo;
 import javafx.util.Duration;
 //import static helpers.Clock.*;
 /**
-*About: Creates projectile which fires at enemy towers contains drawing function to animate projectiles 
+* @author:  Athena Bolyos, Jacob Hazen, Daniel Orduz, and Aiden Wong.
+* About: Creates projectile which fires at enemy towers contains drawing function to animate projectiles 
 */
 public class Projectile extends ImageView {
 	
